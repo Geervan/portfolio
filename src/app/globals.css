@@ -1,27 +1,76 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fonts */
+  --font-heading: var(--font-patrick), cursive;
+  --font-body: var(--font-patrick), cursive;
+
+  /* Full Screen Paper Colors */
+  --bg-color: #2e2e2e;
+  /* Dark Graphite */
+  --text-color: #f0f0f0;
+  --secondary-text: #ccc;
+  --border-color: #f0f0f0;
+  /* White chalky border */
+
+  --input-bg: transparent;
+  --button-bg: #2e2e2e;
+  --button-text: #fff;
+  --button-border: #fff;
+
+  --line-color: #383838;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="light"] {
+  --bg-color: #fdfbf7;
+  /* Paper */
+  --text-color: #2d2d2d;
+  --secondary-text: #555;
+  --border-color: #2d2d2d;
+  /* Pencil border */
+
+  --button-bg: #fff;
+  --button-text: #000;
+  --button-border: #000;
+
+  --line-color: #e0e0e0;
 }
 
+/* Custom Cursors */
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  /* Pencil Cursor */
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L12 28L16 16L28 12L2 2Z' fill='%232e2e2e' stroke='%23f0f0f0' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 1 1,
+    auto;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+[data-theme="light"] html,
+[data-theme="light"] body {
+  /* Dark Pencil for Light Mode */
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L12 28L16 16L28 12L2 2Z' fill='%23222' stroke='%23fff' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 1 1,
+    auto;
+}
+
+a,
+button,
+.tactile-btn,
+input,
+textarea,
+select,
+label[for] {
+  /* Pencil Cursor (Consistent) */
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L12 28L16 16L28 12L2 2Z' fill='%232e2e2e' stroke='%23f0f0f0' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 1 1,
+    pointer;
+}
+
+[data-theme="light"] a,
+[data-theme="light"] button,
+[data-theme="light"] .tactile-btn,
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select,
+[data-theme="light"] label[for] {
+  /* Dark Pencil Cursor (Consistent) */
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L12 28L16 16L28 12L2 2Z' fill='%23222' stroke='%23fff' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 1 1,
+    pointer;
 }
 
 * {
@@ -30,13 +79,610 @@ body {
   margin: 0;
 }
 
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  /* Lined Paper Background - Full Screen */
+  background-image: linear-gradient(var(--line-color) 1px, transparent 1px);
+  background-size: 100% 2.5rem;
+  /* Wider lines for loose leaf feel */
+  background-attachment: local;
+}
+
+/* Full Width Layout */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  padding-top: 8rem;
+  /* Enough clearance for fixed header */
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  /* Chalk/Pencil header vibe */
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Sketchy Underline for H2 */
+h2::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-color);
+  border-radius: 4px;
+  transform: rotate(-1deg);
+  margin-top: 5px;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 1.35rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+  position: relative;
+  font-weight: bold;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Scribbly Navbar Links */
+.nav-link {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  padding: 0 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Scribbly underline using a pseudo-element border trick or SVG */
+.nav-link::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 8px;
+  /* Height of the scribble */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' viewBox='0 0 100 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5 Q 10 0, 20 5 T 40 5 T 60 5 T 80 5 T 98 5' stroke='%23888' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 100%;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+  filter: brightness(0.5);
+}
+
+/* Inputs - Sketchy Messy Box */
+.notebook-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  /* Slight fill text area */
+  border: 2px solid var(--text-color);
+  padding: 1rem;
+  color: var(--text-color);
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  outline: none;
+
+  /* Hand-drawn box with irregularity */
+  border-radius: 2% 4% 3% 5% / 3% 2% 4% 5%;
+  box-shadow: 2px 2px 0px 0px var(--text-color);
+  /* The second stroke */
+  transition: all 0.2s ease;
+}
+
+.notebook-input:focus {
+  transform: scale(1.01) rotate(-0.5deg);
+  box-shadow: 3px 3px 0px 0px var(--text-color);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notebook-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  transform: rotate(-0.5deg);
+  font-weight: bold;
+}
+
+/* Project Cards - Sketchy Box */
+.project-item {
+  margin-bottom: 3rem;
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+  background: transparent;
+  /* No fill, just lines like a drawing */
+
+  /* Hand-drawn rect */
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.project-item:hover {
+  transform: scale(1.01) rotate(0.5deg);
+}
+
+
+.tech-note {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border: 2px solid var(--border-color);
+  padding: 0.3rem 0.8rem;
+
+  /* Oval-ish sketch */
+  border-radius: 50% 20% / 10% 40%;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Fixed Navbar */
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1000px;
+  z-index: 1000;
+
+  background-color: var(--bg-color);
+  padding: 1rem 1.5rem;
+  border-bottom: 2px dashed var(--line-color);
+  /* Shadow for depth */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Polaroids */
+.polaroid {
+  background: #fff;
+  padding: 1rem 1rem 2.5rem 1rem;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+  transform: rotate(2deg);
+  transition: transform 0.3s;
+  max-width: 250px;
+  color: #222;
+  /* Always dark text on polaroid */
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+  z-index: 5;
+}
+
+/* Helper to center content if needed */
+.section {
+  margin-bottom: 5rem;
+}
+
+/* Sticky Note Generic Class */
+.sticky-note {
+  background: #ffeb3b;
+  color: #333;
+  padding: 1.5rem;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  transform: rotate(-2deg);
+  font-family: var(--font-heading);
+  display: inline-block;
+  max-width: 250px;
+  position: relative;
+}
+
+/* Obvious Hyperlinks (Boxed Scribble) */
+.scribble-link {
+  position: relative;
+  display: inline-block;
+  padding: 0 5px;
+  margin: 0 5px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.scribble-link::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -10px;
+  right: -5px;
+  border: 2px solid var(--text-color);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-2deg);
+  transition: transform 0.2s;
+}
+
+.scribble-link:hover::before {
+  transform: rotate(1deg) scale(1.1);
+  border-width: 3px;
+}
+
+/* Buttons */
+.tactile-btn {
+  display: inline-block;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 2px solid var(--button-border);
+  padding: 0.8rem 2rem;
+  font-family: var(--font-heading);
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  /* The "Excalidraw" messy box look */
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+
+  box-shadow: 2px 3px 0px var(--button-text);
+  transition: all 0.1s ease;
+  user-select: none;
+  margin-top: 0.5rem;
+}
+
+.tactile-btn:hover {
+  transform: scale(1.02) rotate(-1deg);
+  box-shadow: 4px 5px 0px var(--button-text);
+}
+
+/* Hand-drawn 3D Resume Button */
+.resume-btn-3d {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 2px solid var(--text-color);
+  /* Strong border */
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+
+  /* 3D Sketchy Look */
+  border-radius: 2% 98% 1% 99% / 99% 2% 99% 1%;
+  box-shadow: 4px 5px 0px 0px var(--text-color);
+  /* Hard 3D Shadow */
+  transition: all 0.15s ease;
+  transform: rotate(-2deg);
+  margin-left: 0.5rem;
+}
+
+.resume-btn-3d:hover {
+  transform: rotate(0deg) translate(2px, 2px);
+  /* Press effect */
+  box-shadow: 2px 3px 0px 0px var(--text-color);
+}
+
+/* Tape Effect for Photos */
+.tape {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+  background-size: 10px 10px;
+  transform: rotate(-25deg);
+  top: -15px;
+  left: 30%;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+}
+
+/* Messy Stack of Sticky Notes */
+.sticky-stack {
+  position: relative;
+  background: #ffeb3b;
+  color: #333;
+  padding: 1.5rem;
+  font-family: var(--font-heading);
+  border-radius: 2px;
+  /* Stacked shadow effect */
+  box-shadow:
+    1px 1px 0px #e6d335,
+    3px 3px 0px #fdd835,
+    4px 4px 0px #fbc02d,
+    6px 6px 8px rgba(0, 0, 0, 0.3);
+  transform: rotate(4deg);
+  max-width: 250px;
+}
+
+.sticky-stack::before {
+  content: "TOP SKILLS";
+  position: absolute;
+  top: -12px;
+  right: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: #fff;
+  padding: 2px 6px;
+  border: 1px solid #333;
+  transform: rotate(3deg);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Project Grid Layout */
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+/* Randomize rotations for a messy grid look */
+.project-item:nth-child(2n) {
+  transform: rotate(1deg);
+}
+
+.project-item:nth-child(3n) {
+  transform: rotate(-1.5deg);
+}
+
+.project-item:nth-child(4n) {
+  transform: rotate(0.5deg);
+}
+
+.project-item:nth-child(5n) {
+  transform: rotate(-2deg);
+}
+
+/* Coffee Stain Effect */
+.coffee-stain {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(139, 69, 19, 0.05) 40%, rgba(139, 69, 19, 0.15) 85%, rgba(139, 69, 19, 0.3) 100%);
+  border-radius: 50% 45% 55% 50% / 50% 55% 45% 50%;
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: -1;
+  transform: rotate(25deg);
+}
+
+.coffee-stain::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 2px solid rgba(139, 69, 19, 0.1);
+  border-radius: 50% 45% 55% 50% / 50% 55% 45% 50%;
+}
+
+/* Ink Splatter Effect */
+.ink-splatter {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #333 30%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.7;
+  filter: blur(1px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ink-splatter::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* Pinned Paper Title */
+/* Pinned Paper Title */
+.pinned-paper {
+  position: relative;
+  display: inline-block;
+  /* Dirty/Aged Paper Background */
+  background-color: #f4f1ea;
+  background-image:
+    radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.05) 100%),
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.02) 10px, rgba(0, 0, 0, 0.02) 11px);
+  color: #222;
+  padding: 1.5rem 3rem 2rem 3rem;
+  filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.4));
+  transform: rotate(-2deg);
+  margin-top: 1rem;
+
+  /* Randomly Torn on ALL Sides */
+  clip-path: polygon(2% 5%, 8% 2%, 15% 5%, 25% 1%, 35% 4%, 45% 2%, 55% 5%, 65% 1%, 75% 4%, 85% 2%, 95% 5%, 100% 0%,
+      98% 10%, 95% 20%, 99% 30%, 96% 40%, 98% 50%, 95% 60%, 99% 70%, 96% 80%, 98% 90%, 100% 100%,
+      92% 98%, 85% 95%, 78% 99%, 70% 95%, 62% 99%, 55% 95%, 48% 99%, 40% 95%, 32% 99%, 25% 95%, 18% 99%, 10% 95%, 2% 99%, 0% 100%,
+      2% 90%, 5% 80%, 1% 70%, 4% 60%, 2% 50%, 5% 40%, 1% 30%, 4% 20%, 2% 10%, 0% 0%);
+}
+
+/* The Push Pin - Realistic Plastic Style */
+.pinned-paper::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+
+  /* Shiny Red Plastic with Highlight */
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 2%, transparent 15%),
+    /* Specular Highlight */
+    radial-gradient(circle at 50% 50%, #ff5252, #b71c1c);
+  /* Body */
+
+  box-shadow:
+    inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+    /* Self shadow */
+    2px 3px 5px rgba(0, 0, 0, 0.4);
+  /* Cast shadow on paper */
+
+  border: 1px solid rgba(183, 28, 28, 0.5);
+  z-index: 10;
+}
+
+/* Light Mode Override if needed (defaults are already light paper) */
+[data-theme="light"] .pinned-paper {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: row;
+    /* Keep horizontal */
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-top: 0;
+  }
+
+  .section {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 2rem !important;
+  }
+
+  .project-list {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .polaroid {
+    margin: 1rem auto;
+    transform: rotate(0deg) !important;
+  }
+
+  .sticky-stack {
+    margin: 2rem auto;
+    transform: rotate(2deg) !important;
+    width: 80%;
+  }
+
+  .resume-btn-3d {
+    margin-top: 1rem;
+    margin-left: 0;
   }
 }
+
+/* Mobile Navigation */
+.mobile-toggle {
+  display: none !important;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 320px;
+  height: 100vh;
+  background-color: var(--bg-color);
+  /* Lined Paper Background */
+  background-image: linear-gradient(var(--line-color) 1px, transparent 1px);
+  background-size: 100% 2.5rem;
+
+  border-left: 2px dashed var(--line-color);
+  padding: 2rem;
+  padding-top: 1.5rem;
+  /* Space for close btn */
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  /* Above everything */
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu.open {
+  right: 0;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-toggle {
+    display: block !important;
+  }
+
+  .header {
+    padding: 0.8rem 1.2rem;
+    /* Transparent Mobile Header */
+    background-color: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Existing styles... ensure they don't conflict */
+  .container {
+    padding-top: 6rem;
+  }
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  margin: 0.5rem;
+}
+
+.container {
+  padding: 1.5rem;
+}
+
+.coffee-stain {
+  display: none;
+}
+
+/* Hide clutter on mobile? */
+/* Hide clutter on mobile? */

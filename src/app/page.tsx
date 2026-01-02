@@ -75,7 +75,7 @@ export default function Home() {
           <div className="tape"></div>
 
           <img src="/home_pic.jpeg" alt="Geervan Professional" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center 50%', display: 'block', borderRadius: '2px' }} />
-          <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)', color: '#333' }}>Geervan</p>
+          <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)', color: '#333' }}>Presenting Myself XD</p>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '0.5rem' }}>
             <a href="https://github.com/geervan" target="_blank" aria-label="GitHub" style={{ color: '#333' }}>

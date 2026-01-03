@@ -17,6 +17,8 @@ export default function Home() {
             Bridging the gap between Engineering and Product Thinking.
             <br />
             Currently obsessed with <span className="tech-note">LLMs, Agents</span> and <span className="tech-note">Product,UX</span>.
+            <br />
+            Looking for Remote AI/Technical PM or AI Internship opportunities.
           </p>
 
           {/* Desk Info Stack */}

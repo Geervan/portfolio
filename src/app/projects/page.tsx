@@ -16,14 +16,14 @@ export default function Projects() {
             description: "A 3D web-based learning environment featuring interactive college elements to create an immersive study space. Rapidly prototyped for a hackathon.",
             tags: ["Three.js", "React", "TailwindCSS"],
             link: "https://void-nine-kohl.vercel.app",
-            githubLink: "https://github.com/geervan",
+            githubLink: "https://github.com/Geervan/Cosmos-Classroom",
             image: "/projects/cosmos.png"
         },
         {
             title: "SpaceBasic Bot",
             description: "Automated bot to streamline hostel housekeeping requests and track attendance data from the Student Management System.",
             tags: ["Python", "Automation", "Playwright", "Discord API"],
-            githubLink: "https://github.com/geervan",
+            githubLink: "https://github.com/Geervan/SpaceBasic-Automation",
             image: "/projects/spacebasic.png"
         },
         {

@@ -684,5 +684,40 @@ a {
   display: none;
 }
 
-/* Hide clutter on mobile? */
+/* Modern Newspaper Clipping Images */
+.newspaper-clipping {
+  position: absolute;
+  z-index: 2;
+  /* Ensure on top */
+  width: 250px;
+  max-width: 35vw;
+  filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+.newspaper-left {
+  top: 120px;
+  /* Sitting lower, behind the description text */
+  left: -60px;
+  transform: rotate(-5deg);
+  z-index: 1;
+  /* Text container is z-index: 2, so this sits behind */
+}
+
+.newspaper-right {
+  top: 10px;
+  right: 10%;
+  transform: rotate(10deg);
+}
+
+@media (max-width: 1024px) {
+  .newspaper-clipping {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+}
+
 /* Hide clutter on mobile? */

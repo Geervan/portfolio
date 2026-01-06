@@ -5,7 +5,40 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section className="section" style={{ display: 'flex', gap: '3rem', alignItems: 'center', flexWrap: 'wrap-reverse', position: 'relative' }}>
-        <div style={{ flex: 1, minWidth: '300px' }}>
+
+        {/* Modern Newspaper Decorations */}
+        {/* Modern Newspaper Decorations */}
+        <img src="/geek.png" alt="Prod DB Deleted" className="newspaper-clipping newspaper-right" />
+
+        {/* Handwritten Joke Annotation */}
+        {/* Handwritten Joke Annotation */}
+        <div className="joke-arrow desktop-only" style={{ position: 'absolute', top: '0px', right: '-40px', zIndex: 5, pointerEvents: 'none' }}>
+          <svg width="200" height="200" viewBox="0 0 200 200" style={{ overflow: 'visible' }}>
+            {/* Arrow curving from right side of polaroid upwards to the left */}
+            <path d="M 170 160 Q 180 80 40 40" fill="none" stroke="#e53935" strokeWidth="2.5" strokeDasharray="6,4" markerEnd="url(#arrowhead)" strokeLinecap="round" />
+            <defs>
+              <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                <path d="M0,0 L12,6 L0,12" fill="none" stroke="#e53935" strokeWidth="2" />
+              </marker>
+            </defs>
+          </svg>
+          <p style={{
+            position: 'absolute',
+            top: '160px',
+            left: '170px',
+            fontFamily: 'var(--font-heading)',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            color: '#e53935',
+            width: '150px',
+            lineHeight: '1.2',
+            transform: 'rotate(5deg)'
+          }}>
+            (It's a joke! I won't actually do it... probably)
+          </p>
+        </div>
+
+        <div style={{ flex: 1, minWidth: '300px', position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: '4.5rem', marginBottom: '0.5rem' }}>
             <span className="pinned-paper">Geervan</span>
           </h1>

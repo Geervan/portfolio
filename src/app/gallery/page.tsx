@@ -16,8 +16,9 @@ export default function Gallery() {
             />
 
             <h1>Gallery</h1>
-            <p style={{ marginBottom: '2rem' }}>Get to know the person behind the screen!</p>
-
+            <h1 style={{ marginBottom: '1rem' }}>
+                <span className="pinned-paper">Visuals</span>
+            </h1>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '3rem', marginTop: '2rem' }}>
 
                 {/* Photo 1 */}
@@ -85,7 +86,7 @@ export default function Gallery() {
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>Jaipur at night ❤️</p>
                 </div>
 
-                
+
             </div>
         </section>
     );

@@ -39,8 +39,8 @@ export default function Projects() {
     return (
         <section className="section">
             <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-                <h1>
-                    <span className="pinned-paper">Experiments</span>
+                <h1 style={{ marginBottom: '0.5rem' }}>
+                    <span className="pinned-paper">Projects</span>
                 </h1>
                 <p style={{ fontSize: "1.3rem", marginTop: "1rem", color: "var(--secondary-text)" }}>
                     A collection of code, chaos, and caffeine-fueled builds.

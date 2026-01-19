@@ -378,6 +378,7 @@ export default function InteractiveDoodles() {
     return (
         <canvas
             ref={canvasRef}
+            className="interactive-doodles"
             style={{
                 position: 'fixed',
                 top: 0,

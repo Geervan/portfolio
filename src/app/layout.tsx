@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
 import Navigation from "@/components/Navigation";
+import MobileDock from "@/components/MobileDock";
 import InteractiveDoodles from "@/components/InteractiveDoodles";
 
 const inter = Inter({
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${patrickHand.variable} antialiased`}>
         <ThemeProvider>
           <InteractiveDoodles />
+          <MobileDock />
 
           <header className="header">
             <div className="logo-area">
@@ -40,7 +42,7 @@ export default function RootLayout({
             <ThemeToggle />
           </header>
 
-          <div className="container animate-enter" style={{ position: 'relative', zIndex: 1, marginTop: '100px' }}>
+          <div className="container" style={{ position: 'relative', zIndex: 1, marginTop: '100px' }}>
             <main>
               {children}
             </main>

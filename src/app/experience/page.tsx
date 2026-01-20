@@ -211,7 +211,7 @@ export default function Experience() {
                             alt="MUJ hackx"
                             style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '2px', border: '1px solid #ddd', background: '#f0f0f0', display: 'block' }}
                         />
-                        <h3 style={{ marginTop: '1rem', textAlign: 'center', fontSize: '1.3rem' }}>GSSoC '24</h3>
+                        <h3 style={{ marginTop: '1rem', textAlign: 'center', fontSize: '1.3rem' }}>MUJ HackX 3.0</h3>
                         <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#555', marginTop: '0.5rem', lineHeight: '1.4' }}>
                             Finalist MUJ HackX 3.0
                         </p>

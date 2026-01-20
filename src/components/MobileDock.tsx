@@ -24,10 +24,13 @@ export default function MobileDock() {
                         key={link.name}
                         href={link.href}
                         className={`dock-item ${isActive ? "active" : ""}`}
+                        style={{ position: 'relative' }} // Ensure positioning context
                     >
-                        <span className="dock-icon">{link.icon}</span>
+                        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {isActive && <div className="active-dot" />}
+                            <span className="dock-icon">{link.icon}</span>
+                        </div>
                         <span className="dock-label">{link.name}</span>
-                        {isActive && <div className="active-dot" />}
                     </Link>
                 );
             })}

@@ -15,10 +15,14 @@ export default function Gallery() {
                 onClose={() => setSelectedImg(null)}
             />
 
-            <h1>Gallery</h1>
-            <h1 style={{ marginBottom: '1rem' }}>
-                <span className="pinned-paper">Visuals</span>
-            </h1>
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                <h1 style={{ marginBottom: '1rem' }}>
+                    <span className="pinned-paper">Gallery</span>
+                </h1>
+                <p style={{ fontSize: '1.2rem', color: 'var(--secondary-text)', fontFamily: 'var(--font-inter)' }}>
+                    Snapshots from my journey.
+                </p>
+            </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '3rem', marginTop: '2rem' }}>
 
                 {/* Photo 1 */}

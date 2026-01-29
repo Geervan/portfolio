@@ -422,6 +422,11 @@ a {
     6px 6px 8px rgba(0, 0, 0, 0.3);
   transform: rotate(4deg);
   max-width: 250px;
+
+  /* Desktop Positioning */
+  float: left;
+  margin-left: 1rem;
+  margin-right: 2rem;
 }
 
 .sticky-stack::before {
@@ -588,6 +593,12 @@ a {
     gap: 2rem !important;
   }
 
+  .home-intro {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
   .project-list {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -602,6 +613,7 @@ a {
     margin: 2rem auto;
     transform: rotate(2deg) !important;
     width: 80%;
+    float: none;
   }
 
   .resume-btn-3d {

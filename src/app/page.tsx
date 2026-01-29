@@ -38,7 +38,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div style={{ flex: 1, minWidth: '300px', position: 'relative', zIndex: 2 }}>
+        <div className="home-intro" style={{ flex: 1, minWidth: '300px', position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: '4.5rem', marginBottom: '0.5rem' }}>
             <span className="pinned-paper">Geervan</span>
           </h1>
@@ -46,7 +46,7 @@ export default function Home() {
             Aspiring AI/Technical PM || Aspiring SDE
           </p>
 
-          <p style={{ fontSize: '1.4rem', marginTop: '1.5rem', lineHeight: '1.6', maxWidth: '90%' }}>
+          <p style={{ fontSize: '1.4rem', marginTop: '1.5rem', lineHeight: '1.6', maxWidth: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
             Bridging the gap between Engineering and Product Thinking.
             <br />
             Currently obsessed with <span className="tech-note">LLMs, Agents</span> and <span className="tech-note">Product,UX</span>.
@@ -55,7 +55,7 @@ export default function Home() {
           </p>
 
           {/* Desk Info Stack */}
-          <div className="sticky-stack" style={{ marginTop: '2rem', marginLeft: '1rem', float: 'left', marginRight: '2rem' }}>
+          <div className="sticky-stack" style={{ marginTop: '2rem' }}>
             <p style={{ margin: 0, borderBottom: '1px dashed #333', paddingBottom: '0.2rem' }}>✓ Shipped 3 Projects</p>
             <p style={{ margin: '0.5rem 0', borderBottom: '1px dashed #333', paddingBottom: '0.2rem' }}>Currently: Product & LLMs</p>
             <p style={{ margin: 0 }}>Status: <b>Caffeinated ☕</b></p>

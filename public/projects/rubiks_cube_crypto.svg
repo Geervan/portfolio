@@ -1,0 +1,64 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#586e75" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#002b36" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Cube Group -->
+  <g transform="translate(400, 300) scale(1.5)" stroke="#2aa198" stroke-width="2" fill="none" filter="url(#glow)">
+    
+    <!-- Inner Cube (Core) -->
+    <path d="M0 -60 L52 -30 L52 30 L0 60 L-52 30 L-52 -30 Z" opacity="0.5" stroke-dasharray="5,5"/>
+    <path d="M0 -60 L0 0 M0 0 L-52 30 M0 0 L52 30" opacity="0.5" stroke-dasharray="5,5"/>
+
+    <!-- Outer Sections (Exploded View) -->
+    <!-- Top Face -->
+    <path d="M0 -90 L80 -45 L0 0 L-80 -45 Z" stroke-width="3" fill="rgba(42, 161, 152, 0.1)"/>
+    
+    <!-- Right Face -->
+    <path d="M0 0 L80 -45 L80 45 L0 90 Z" stroke-width="3" fill="rgba(42, 161, 152, 0.15)"/>
+    
+    <!-- Left Face -->
+    <path d="M0 0 L-80 -45 L-80 45 L0 90 Z" stroke-width="3" fill="rgba(42, 161, 152, 0.2)"/>
+
+    <!-- Grid Lines on Faces (3x3) -->
+    <!-- Top -->
+    <path d="M-53 -30 L27 15 M-27 -15 L53 30" opacity="0.7"/>
+    <path d="M0 -90 L0 0 M-80 -45 L80 -45" opacity="0.0"/> <!-- Simplification -->
+    <path d="M-27 -75 L53 -30 M-53 -60 L27 -15" opacity="0.7"/>
+    <path d="M27 -75 L-53 -30 M53 -60 L-27 -15" opacity="0.7"/>
+
+    <!-- Left -->
+    <path d="M-27 15 L-27 105 M-53 30 L-53 120" stroke="none"/> <!-- Cleanup -->
+    <path d="M-80 -15 L0 30 M-80 15 L0 60" opacity="0.7"/>
+    <path d="M-53 -30 L-53 60 M-27 -15 L-27 75" opacity="0.7"/>
+
+    <!-- Right -->
+    <path d="M0 30 L80 -15 M0 60 L80 15" opacity="0.7"/>
+    <path d="M27 -15 L27 75 M53 -30 L53 60" opacity="0.7"/>
+
+  </g>
+
+  <!-- Data Lines / Keys -->
+  <g stroke="#839496" stroke-width="1" font-family="monospace" font-size="14" fill="#839496">
+    <text x="50" y="550">FIG 2.4: POLYALPHABETIC_CUBE_CIPHER</text>
+    <text x="50" y="570">STATUS: ENCRYPTED</text>
+    <text x="600" y="50">KEY_MATRIX: [ROT_X, ROT_Y]</text>
+    
+    <!-- Decorative Lines -->
+    <path d="M50 530 L300 530 L320 500" fill="none"/>
+    <circle cx="320" cy="500" r="3" fill="#2aa198"/>
+  </g>
+</svg>

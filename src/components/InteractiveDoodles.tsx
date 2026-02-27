@@ -10,6 +10,8 @@ interface Doodle {
     rotation: number;
     scale: number;
     type: "gear" | "stickman" | "cube" | "bracket" | "arrow" | "bulb" | "star" | "laptop" | "can" | "cloud" | "coffee" | "books";
+    motionAngle: number; // direction the speed lines point
+    motionLen: number;   // length of speed lines
 }
 
 export default function InteractiveDoodles() {
@@ -19,6 +21,7 @@ export default function InteractiveDoodles() {
     const lastMoveRef = useRef(Date.now());
     const doodleRef = useRef<Doodle[]>([]);
     const hoveredNavRef = useRef<string | null>(null);
+    const isSurprisedRef = useRef(false);
 
     useEffect(() => {
         const handleNavHover = (e: any) => {
@@ -36,29 +39,29 @@ export default function InteractiveDoodles() {
         const initialDoodles: Doodle[] = [];
         const types: Doodle["type"][] = ["gear", "cube", "bracket", "arrow", "bulb", "star", "laptop", "can", "cloud", "books", "coffee"];
 
-        // Populate Background with STATIC doodles
-        // Increased density for "messy" look
         for (let i = 0; i < 40; i++) {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
             initialDoodles.push({
                 id: i,
-                x: x,
-                y: y,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
                 type: types[Math.floor(Math.random() * types.length)],
                 rotation: Math.random() * 360,
-                scale: 0.8 + Math.random() * 0.8
+                scale: 0.8 + Math.random() * 0.8,
+                motionAngle: Math.random() * Math.PI * 2,
+                motionLen: 8 + Math.random() * 12
             });
         }
 
-        // The Stickman Hero - distinct location
+        // The Stickman Hero
         initialDoodles.push({
             id: 999,
             x: window.innerWidth - 120,
             y: window.innerHeight - 100,
             type: 'stickman',
             rotation: 0,
-            scale: 1.3
+            scale: 1.3,
+            motionAngle: 0,
+            motionLen: 0
         });
 
         doodleRef.current = initialDoodles;
@@ -82,6 +85,36 @@ export default function InteractiveDoodles() {
         };
         window.addEventListener("resize", resize);
         resize();
+
+        const drawShape = (ctx: CanvasRenderingContext2D, type: Doodle["type"]) => {
+            if (type === 'gear') {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    ctx.rotate(Math.PI / 3); ctx.moveTo(8, -5); ctx.lineTo(12, -5); ctx.lineTo(12, 5); ctx.lineTo(8, 5);
+                }
+                ctx.arc(0, 0, 8, 0, Math.PI * 2); ctx.stroke();
+            } else if (type === 'cube') {
+                ctx.strokeRect(-10, -10, 20, 20); ctx.beginPath(); ctx.moveTo(-10, -10); ctx.lineTo(-15, -15); ctx.moveTo(10, -10); ctx.lineTo(15, -15); ctx.moveTo(10, 10); ctx.lineTo(15, 5); ctx.moveTo(-10, 10); ctx.lineTo(-15, 5); ctx.moveTo(-15, -15); ctx.lineTo(15, -15); ctx.lineTo(15, 5); ctx.lineTo(-15, 5); ctx.lineTo(-15, -15); ctx.stroke();
+            } else if (type === 'bracket') {
+                ctx.beginPath(); ctx.moveTo(10, -15); ctx.lineTo(0, -15); ctx.lineTo(0, 15); ctx.lineTo(10, 15); ctx.stroke();
+            } else if (type === 'arrow') {
+                ctx.beginPath(); ctx.moveTo(-15, 0); ctx.lineTo(15, 0); ctx.moveTo(10, -5); ctx.lineTo(15, 0); ctx.lineTo(10, 5); ctx.stroke();
+            } else if (type === 'bulb') {
+                ctx.beginPath(); ctx.arc(0, -8, 10, 0, Math.PI * 2); ctx.moveTo(-4, -5); ctx.lineTo(0, -8); ctx.lineTo(4, -5); ctx.rect(-4, 2, 8, 6); ctx.stroke();
+            } else if (type === 'star') {
+                ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); ctx.stroke();
+            } else if (type === 'laptop') {
+                ctx.strokeRect(-12, -8, 24, 16); ctx.strokeRect(-15, 8, 30, 2); ctx.beginPath(); ctx.moveTo(-8, -4); ctx.lineTo(0, -4); ctx.moveTo(-8, 0); ctx.lineTo(4, 0); ctx.moveTo(-8, 4); ctx.lineTo(-2, 4); ctx.stroke();
+            } else if (type === 'can') {
+                ctx.beginPath(); ctx.ellipse(0, -10, 8, 3, 0, 0, Math.PI * 2); ctx.moveTo(-8, -10); ctx.lineTo(-8, 10); ctx.moveTo(8, -10); ctx.lineTo(8, 10); ctx.ellipse(0, 10, 8, 3, 0, 0, Math.PI * 2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(1, -5); ctx.lineTo(-2, 0); ctx.lineTo(2, 0); ctx.lineTo(-1, 5); ctx.stroke();
+            } else if (type === 'cloud') {
+                ctx.beginPath(); ctx.arc(-10, 0, 8, Math.PI * 0.5, Math.PI * 1.5); ctx.arc(0, -8, 10, Math.PI * 1, Math.PI * 2); ctx.arc(10, 0, 8, Math.PI * 1.5, Math.PI * 0.5); ctx.closePath(); ctx.stroke();
+            } else if (type === 'books') {
+                ctx.strokeRect(-12, 5, 24, 6); ctx.strokeRect(-10, -1, 20, 6); ctx.strokeRect(-14, -7, 28, 6);
+            } else if (type === 'coffee') {
+                ctx.beginPath(); ctx.moveTo(-8, -8); ctx.lineTo(-8, 8); ctx.bezierCurveTo(-8, 12, 8, 12, 8, 8); ctx.lineTo(8, -8); ctx.stroke(); ctx.beginPath(); ctx.moveTo(8, -4); ctx.bezierCurveTo(12, -4, 12, 4, 8, 4); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-3, -12); ctx.lineTo(-3, -16); ctx.moveTo(3, -12); ctx.lineTo(3, -16); ctx.stroke();
+            }
+        };
 
         let animationId: number;
         let time = 0;
@@ -253,10 +286,9 @@ export default function InteractiveDoodles() {
                     ctx.fillText("It's me!", -40, -40);
 
                 } else if (navHover === 'Home') {
-                    // Simply waving
-                    const wave = Math.sin(time * 0.2) * 20;
-                    ctx.moveTo(0, -5); ctx.lineTo(-15, 0 + wave);
-                    ctx.moveTo(0, -5); ctx.lineTo(15, 10);
+                    // Static neutral pose for Home
+                    ctx.moveTo(0, -5); ctx.lineTo(-15, 15);
+                    ctx.moveTo(0, -5); ctx.lineTo(15, 15);
                     ctx.stroke();
 
                     ctx.font = '14px "Patrick Hand", sans-serif';
@@ -264,8 +296,9 @@ export default function InteractiveDoodles() {
                     ctx.fillText("Back to Base", -60, -40);
 
                 } else if (isSurprised) {
-                    ctx.moveTo(0, -5); ctx.lineTo(-20, -15); // L Arm Up
-                    ctx.moveTo(0, -5); ctx.lineTo(20, -15); // R Arm Up
+                    // Arms out/down instead of up (avoid head vibration look)
+                    ctx.moveTo(0, -5); ctx.lineTo(-25, 5); // L Arm Out
+                    ctx.moveTo(0, -5); ctx.lineTo(25, 5); // R Arm Out
                     ctx.stroke();
 
                     // Mouth O
@@ -302,38 +335,27 @@ export default function InteractiveDoodles() {
                     ctx.moveTo(0, -5); ctx.lineTo(5, 15); // R Arm down
                     ctx.stroke();
                 }
-
             } else {
-                // Other shapes (simplified drawing logic reused)
-                if (d.type === 'gear') {
+                // Speed lines behind the doodle to suggest motion
+                const lineAlpha = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+                ctx.strokeStyle = lineAlpha;
+                ctx.lineWidth = 1;
+                const cos = Math.cos(d.motionAngle);
+                const sin = Math.sin(d.motionAngle);
+                const len = d.motionLen;
+                // 3 trailing speed lines
+                for (let i = 0; i < 3; i++) {
+                    const offset = (i + 1) * 6;
+                    const spread = (i - 1) * 5;
                     ctx.beginPath();
-                    for (let i = 0; i < 6; i++) {
-                        ctx.rotate(Math.PI / 3); ctx.moveTo(8, -5); ctx.lineTo(12, -5); ctx.lineTo(12, 5); ctx.lineTo(8, 5);
-                    }
-                    ctx.arc(0, 0, 8, 0, Math.PI * 2); ctx.stroke();
-                } else if (d.type === 'cube') {
-                    ctx.strokeRect(-10, -10, 20, 20); ctx.beginPath(); ctx.moveTo(-10, -10); ctx.lineTo(-15, -15); ctx.moveTo(10, -10); ctx.lineTo(15, -15); ctx.moveTo(10, 10); ctx.lineTo(15, 5); ctx.moveTo(-10, 10); ctx.lineTo(-15, 5); ctx.moveTo(-15, -15); ctx.lineTo(15, -15); ctx.lineTo(15, 5); ctx.lineTo(-15, 5); ctx.lineTo(-15, -15); ctx.stroke();
-                } else if (d.type === 'bracket') {
-                    ctx.beginPath(); ctx.moveTo(10, -15); ctx.lineTo(0, -15); ctx.lineTo(0, 15); ctx.lineTo(10, 15); ctx.stroke();
-                } else if (d.type === 'arrow') {
-                    ctx.beginPath(); ctx.moveTo(-15, 0); ctx.lineTo(15, 0); ctx.moveTo(10, -5); ctx.lineTo(15, 0); ctx.lineTo(10, 5); ctx.stroke();
-                } else if (d.type === 'bulb') {
-                    ctx.beginPath(); ctx.arc(0, -8, 10, 0, Math.PI * 2); ctx.moveTo(-4, -5); ctx.lineTo(0, -8); ctx.lineTo(4, -5); ctx.rect(-4, 2, 8, 6); ctx.stroke();
-                } else if (d.type === 'star') {
-                    ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); ctx.stroke();
-                } else if (d.type === 'laptop') {
-                    ctx.strokeRect(-12, -8, 24, 16); ctx.strokeRect(-15, 8, 30, 2); ctx.beginPath(); ctx.moveTo(-8, -4); ctx.lineTo(0, -4); ctx.moveTo(-8, 0); ctx.lineTo(4, 0); ctx.moveTo(-8, 4); ctx.lineTo(-2, 4); ctx.stroke();
-                } else if (d.type === 'can') {
-                    ctx.beginPath(); ctx.ellipse(0, -10, 8, 3, 0, 0, Math.PI * 2); ctx.moveTo(-8, -10); ctx.lineTo(-8, 10); ctx.moveTo(8, -10); ctx.lineTo(8, 10); ctx.ellipse(0, 10, 8, 3, 0, 0, Math.PI * 2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(1, -5); ctx.lineTo(-2, 0); ctx.lineTo(2, 0); ctx.lineTo(-1, 5); ctx.stroke();
-                } else if (d.type === 'cloud') {
-                    ctx.beginPath(); ctx.arc(-10, 0, 8, Math.PI * 0.5, Math.PI * 1.5); ctx.arc(0, -8, 10, Math.PI * 1, Math.PI * 2); ctx.arc(10, 0, 8, Math.PI * 1.5, Math.PI * 0.5); ctx.closePath(); ctx.stroke();
-                } else if (d.type === 'books') {
-                    ctx.strokeRect(-12, 5, 24, 6); ctx.strokeRect(-10, -1, 20, 6); ctx.strokeRect(-14, -7, 28, 6);
-                } else if (d.type === 'coffee') {
-                    ctx.beginPath(); ctx.moveTo(-8, -8); ctx.lineTo(-8, 8); ctx.bezierCurveTo(-8, 12, 8, 12, 8, 8); ctx.lineTo(8, -8); ctx.stroke(); ctx.beginPath(); ctx.moveTo(8, -4); ctx.bezierCurveTo(12, -4, 12, 4, 8, 4); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-3, -12); ctx.lineTo(-3, -16); ctx.moveTo(3, -12); ctx.lineTo(3, -16); ctx.stroke();
+                    ctx.moveTo(-cos * offset + sin * spread, -sin * offset - cos * spread);
+                    ctx.lineTo(-cos * (offset + len) + sin * spread, -sin * (offset + len) - cos * spread);
+                    ctx.stroke();
                 }
-            }
 
+                // Main Shape
+                drawShape(ctx, d.type);
+            }
             ctx.restore();
         };
 
@@ -341,26 +363,39 @@ export default function InteractiveDoodles() {
             time++;
             const now = Date.now();
             const timeSinceMove = now - lastMoveRef.current;
-            const isIdle = timeSinceMove > 4000; // 4 Seconds Idle
+            const isIdle = timeSinceMove > 4000;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             const mx = mouseRef.current.x;
             const my = mouseRef.current.y;
 
             doodleRef.current.forEach((d) => {
-                let isNear = false;
-                let isSurprised = false;
-
                 if (d.type === 'stickman') {
+                    let isNear = false;
+                    let isSurprised = false;
                     const dx = mx - d.x;
                     const dy = my - d.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    isNear = dist < 150; // Show speech bubble range
-                    isSurprised = dist < 60; // Personal space invasion!
-                }
+                    isNear = dist < 200;
+                    if (isSurprisedRef.current) {
+                        isSurprised = dist < 120;
+                    } else {
+                        isSurprised = dist < 60;
+                    }
+                    isSurprisedRef.current = isSurprised;
+                    drawDoodle(ctx, d, isNear, isSurprised, isIdle);
+                } else {
+                    // Gentle drift
+                    d.x += Math.cos(d.motionAngle) * 0.15;
+                    d.y += Math.sin(d.motionAngle) * 0.15;
+                    // Wrap around edges
+                    if (d.x < -30) d.x = canvas.width + 30;
+                    if (d.x > canvas.width + 30) d.x = -30;
+                    if (d.y < -30) d.y = canvas.height + 30;
+                    if (d.y > canvas.height + 30) d.y = -30;
 
-                drawDoodle(ctx, d, isNear, isSurprised, isIdle);
+                    drawDoodle(ctx, d, false, false, isIdle);
+                }
             });
 
             animationId = requestAnimationFrame(update);

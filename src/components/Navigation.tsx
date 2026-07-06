@@ -15,6 +15,7 @@ export default function Navigation() {
     const links = [
         { href: "/", label: "Home" },
         { href: "/projects", label: "Projects" },
+        { href: "/skills", label: "Skills" },
         { href: "/experience", label: "Experience" },
         { href: "/gallery", label: "Gallery" },
         { href: "/about", label: "About me" },
@@ -30,7 +31,7 @@ export default function Navigation() {
     return (
         <nav className="navbar" style={{ display: 'flex', alignItems: 'center' }}>
             {/* Desktop Navigation */}
-            <ul className="desktop-nav" style={{ display: 'flex', gap: '1.5rem', listStyle: 'none', flexWrap: 'wrap', alignItems: 'center' }}>
+            <ul className="desktop-nav" style={{ display: 'flex', gap: '2.5rem', listStyle: 'none', flexWrap: 'wrap', alignItems: 'center' }}>
                 {links.map(link => (
                     <li key={link.href}>
                         <Link

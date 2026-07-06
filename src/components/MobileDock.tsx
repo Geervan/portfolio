@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaHome, FaShapes, FaBriefcase, FaEnvelope, FaUser } from "react-icons/fa";
+import { FaHome, FaShapes, FaCode, FaEnvelope, FaUser } from "react-icons/fa";
 
 export default function MobileDock() {
     const pathname = usePathname();
@@ -10,7 +10,7 @@ export default function MobileDock() {
     const links = [
         { name: "Home", href: "/", icon: <FaHome /> },
         { name: "Projects", href: "/projects", icon: <FaShapes /> },
-        { name: "Exp", href: "/experience", icon: <FaBriefcase /> },
+        { name: "Skills", href: "/skills", icon: <FaCode /> },
         { name: "About", href: "/about", icon: <FaUser /> },
         { name: "Contact", href: "/contact", icon: <FaEnvelope /> },
     ];

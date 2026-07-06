@@ -4,6 +4,30 @@ import TactileButton from "@/components/TactileButton";
 export default function Projects() {
     const projects = [
         {
+            title: "Synapse Memory Bridge",
+            description: "A zero-knowledge, high-performance bridge that connects your browser AI chats (ChatGPT, Claude, Gemini, DeepSeek) with VS Code. It captures architectural decisions and code snippets, encrypts them locally via AES-256, and syncs them to your IDE with optional local Ollama context refinement.",
+            tags: ["TypeScript", "Chrome Extension", "VS Code Extension", "Supabase", "AES-256", "Ollama"],
+            githubLink: "https://github.com/Geervan/synapse",
+            link: "https://marketplace.visualstudio.com/items?itemName=geervan.synapse-bridge",
+            image: "/projects/synapse.png",
+            objectFit: "contain"
+        },
+        {
+            title: "Antigravity Portable",
+            description: "A local-first portable IDE — a React PWA client paired with a Node.js host daemon, accessible from any device over Cloudflare Tunnels. No cloud infrastructure required.",
+            bullets: [
+                "Engineered a custom HTTP/WebSocket reverse-proxy gateway that intercepts and rewrites fetch, XHR, WebSocket, and History API calls client-side, routing local dev servers (Next.js, Vite, FastAPI, Flask) through a single authenticated tunnel endpoint.",
+                "Implemented real PTY terminal sessions via node-pty over WebSocket — supporting full ANSI/TTY control and interactive shells per workspace.",
+                "Built a multi-language diagnostic parser (TypeScript, Python, C/C++, Webpack) that streams terminal output in real-time and surfaces file-line errors in a unified Problems panel.",
+                "Secured all surfaces with Bearer token auth and workspace path sandboxing to prevent directory traversal across all file system operations.",
+                "Added automatic stack detection (Next.js, Vite, FastAPI, Django, etc.) to auto-configure frontend/backend port topology without manual setup."
+            ],
+            tags: ["React", "Vite", "Node.js", "Express", "WebSockets", "node-pty", "Cloudflare Tunnels"],
+            githubLink: "https://github.com/Geervan/no-name-yet",
+            image: "/projects/antigravity_portable.png",
+            objectFit: "contain"
+        },
+        {
             title: "Symmetric Cryptograhy Using Rubik Cube Simulator",
             description: "A client-side cryptographic simulation using a chaotic 3D Rubik's Cube as a dynamic key. Features custom deterministic state evolution (CFB) and real-time P2P messaging via WebRTC.",
             tags: ["Three.js", "PeerJS", "Vite", "Vanilla JS"],
@@ -78,7 +102,7 @@ export default function Projects() {
                             <img
                                 src={project.image}
                                 alt={project.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                style={{ width: '100%', height: '100%', objectFit: project.objectFit || 'cover' }}
                             />
                         </div>
 
@@ -90,7 +114,15 @@ export default function Projects() {
                             ))}
                         </div>
 
-                        <p style={{ marginBottom: "1.5rem", lineHeight: "1.6", flex: 1 }}>{project.description}</p>
+                        <p style={{ marginBottom: project.bullets ? '1rem' : '1.5rem', lineHeight: "1.6" }}>{project.description}</p>
+
+                        {project.bullets && (
+                            <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.2rem', lineHeight: '1.7', fontSize: '0.95rem', color: 'var(--secondary-text)' }}>
+                                {project.bullets.map((b: string, i: number) => (
+                                    <li key={i} style={{ marginBottom: '0.4rem' }}>{b}</li>
+                                ))}
+                            </ul>
+                        )}
 
                         <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto' }}>
                             {project.link && (

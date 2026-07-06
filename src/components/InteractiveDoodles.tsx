@@ -10,8 +10,10 @@ interface Doodle {
     rotation: number;
     scale: number;
     type: "gear" | "stickman" | "cube" | "bracket" | "arrow" | "bulb" | "star" | "laptop" | "can" | "cloud" | "coffee" | "books";
-    motionAngle: number; // direction the speed lines point
-    motionLen: number;   // length of speed lines
+    motionAngle: number;
+    motionLen: number;
+    xPercent?: number;
+    yPercent?: number;
 }
 
 export default function InteractiveDoodles() {
@@ -22,6 +24,15 @@ export default function InteractiveDoodles() {
     const doodleRef = useRef<Doodle[]>([]);
     const hoveredNavRef = useRef<string | null>(null);
     const isSurprisedRef = useRef(false);
+    const showWelcomeRef = useRef(true);
+
+    // Fade out welcome bubble after 6 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            showWelcomeRef.current = false;
+        }, 6000);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const handleNavHover = (e: any) => {
@@ -39,16 +50,21 @@ export default function InteractiveDoodles() {
         const initialDoodles: Doodle[] = [];
         const types: Doodle["type"][] = ["gear", "cube", "bracket", "arrow", "bulb", "star", "laptop", "can", "cloud", "books", "coffee"];
 
-        for (let i = 0; i < 40; i++) {
+        // 35 background doodles scattered across the entire window
+        for (let i = 0; i < 35; i++) {
+            const xPercent = Math.random();
+            const yPercent = Math.random();
             initialDoodles.push({
                 id: i,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: xPercent * window.innerWidth,
+                y: yPercent * window.innerHeight,
                 type: types[Math.floor(Math.random() * types.length)],
                 rotation: Math.random() * 360,
-                scale: 0.8 + Math.random() * 0.8,
-                motionAngle: Math.random() * Math.PI * 2,
-                motionLen: 8 + Math.random() * 12
+                scale: 0.7 + Math.random() * 0.7,
+                motionAngle: 0,
+                motionLen: 0,
+                xPercent,
+                yPercent
             });
         }
 
@@ -75,13 +91,24 @@ export default function InteractiveDoodles() {
 
         const handleMouseMove = (e: MouseEvent) => {
             mouseRef.current = { x: e.clientX, y: e.clientY };
-            lastMoveRef.current = Date.now(); // Reset idle timer
+            lastMoveRef.current = Date.now();
         };
         window.addEventListener("mousemove", handleMouseMove);
 
         const resize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // Recalculate positions based on viewport dimensions
+            doodleRef.current.forEach((d) => {
+                if (d.id === 999) {
+                    d.x = window.innerWidth - 120;
+                    d.y = window.innerHeight - 100;
+                } else if (d.xPercent !== undefined && d.yPercent !== undefined) {
+                    d.x = window.innerWidth * d.xPercent;
+                    d.y = window.innerHeight * d.yPercent;
+                }
+            });
         };
         window.addEventListener("resize", resize);
         resize();
@@ -126,25 +153,24 @@ export default function InteractiveDoodles() {
             ctx.scale(d.scale, d.scale);
 
             // Faint style for background
-            ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+            ctx.lineWidth = 1.5;
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
 
             if (d.type === 'stickman') {
-                // Hero is more visible
                 ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
                 ctx.fillStyle = theme === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
 
                 const navHover = hoveredNavRef.current;
                 const isResume = navHover === 'Resume';
 
-                // 1. Head
+                // Head
                 ctx.beginPath();
                 ctx.arc(0, -20, 10, 0, Math.PI * 2);
                 ctx.stroke();
 
-                // 2. Eyes (Tracking)
+                // Eyes
                 const dx = mouseRef.current.x - d.x;
                 const dy = mouseRef.current.y - d.y;
                 const angle = Math.atan2(dy, dx);
@@ -152,169 +178,144 @@ export default function InteractiveDoodles() {
 
                 ctx.fillStyle = theme === 'dark' ? '#fff' : '#333';
                 ctx.beginPath();
-                // Left Eye
                 ctx.arc(-4 + Math.cos(angle) * eyeOffset, -20 + Math.sin(angle) * eyeOffset, 1.5, 0, Math.PI * 2);
-                // Right Eye
                 ctx.arc(4 + Math.cos(angle) * eyeOffset, -20 + Math.sin(angle) * eyeOffset, 1.5, 0, Math.PI * 2);
                 ctx.fill();
 
-                // 3. Body & Legs
+                // Body & Legs
                 ctx.beginPath();
                 if (isResume) {
-                    // Sitting Pose
-                    ctx.moveTo(0, -10); ctx.lineTo(0, 15); // Shorter Body
-                    // Legs (sitting)
-                    ctx.moveTo(0, 15); ctx.lineTo(15, 15); // Thighs
-                    ctx.lineTo(15, 35); // Shins
+                    ctx.moveTo(0, -10); ctx.lineTo(0, 15);
+                    ctx.moveTo(0, 15); ctx.lineTo(15, 15);
+                    ctx.lineTo(15, 35);
                 } else {
-                    // Standing
-                    ctx.moveTo(0, -10); ctx.lineTo(0, 20); // Body
-                    ctx.moveTo(0, 20); ctx.lineTo(-10, 40); // L Leg
-                    ctx.moveTo(0, 20); ctx.lineTo(10, 40); // R Leg
+                    ctx.moveTo(0, -10); ctx.lineTo(0, 20);
+                    ctx.moveTo(0, 20); ctx.lineTo(-10, 40);
+                    ctx.moveTo(0, 20); ctx.lineTo(10, 40);
                 }
                 ctx.stroke();
 
-                // 4. Arms, Props & Text
+                // Arms & Text
                 ctx.beginPath();
 
                 if (isResume) {
-                    // Resume Logic (Typing)
                     const typeSpeed = time * 0.5;
                     const typeOffset = Math.sin(typeSpeed) * 2;
                     ctx.moveTo(0, -5); ctx.lineTo(15, 5 + typeOffset);
                     ctx.moveTo(0, -5); ctx.lineTo(22, 5 - typeOffset);
                     ctx.stroke();
 
-                    // Desk & Laptop
                     ctx.strokeStyle = theme === 'dark' ? '#fff' : '#000';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.moveTo(10, 10); ctx.lineTo(45, 10); // Table top
-                    ctx.moveTo(40, 10); ctx.lineTo(40, 35); // Table Leg
+                    ctx.moveTo(10, 10); ctx.lineTo(45, 10);
+                    ctx.moveTo(40, 10); ctx.lineTo(40, 35);
                     ctx.stroke();
 
-                    // Laptop
                     ctx.lineWidth = 1.5;
                     ctx.beginPath();
-                    ctx.moveTo(25, 10); ctx.lineTo(32, -8); ctx.lineTo(42, -8); ctx.lineTo(35, 10); // Screen
+                    ctx.moveTo(25, 10); ctx.lineTo(32, -8); ctx.lineTo(42, -8); ctx.lineTo(35, 10);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(15, 10); ctx.lineTo(35, 10); // Base
+                    ctx.moveTo(15, 10); ctx.lineTo(35, 10);
                     ctx.stroke();
 
-                    // Tie
                     ctx.fillStyle = '#e53935';
                     ctx.beginPath();
                     ctx.moveTo(0, -10); ctx.lineTo(-3, 0); ctx.lineTo(0, 5); ctx.lineTo(3, 0); ctx.fill();
 
-                    // Text
                     ctx.font = '14px "Patrick Hand", sans-serif';
                     ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                     ctx.fillText("Ooh going to the resume", -130, -50);
                     ctx.fillText("gotta be professional!", -120, -35);
 
-                } else if (navHover === 'Projects') {
-                    // Hammer
-                    ctx.moveTo(0, -5); ctx.lineTo(15, 0); // R Arm holding
-                    ctx.moveTo(0, -5); ctx.lineTo(-10, 10); // L Arm down
-                    ctx.stroke();
-
-                    // Draw Hammer
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(15, 0); ctx.lineTo(25, -10); // Handle
-                    ctx.moveTo(22, -13); ctx.lineTo(28, -7); // Head box
-                    ctx.stroke();
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("Let's Build!", -60, -40);
-
-                } else if (navHover === 'Gallery') {
-                    // Camera
-                    ctx.moveTo(0, -5); ctx.lineTo(10, -5); // R Arm
-                    ctx.moveTo(0, -5); ctx.lineTo(5, 0); // L Arm
-                    ctx.stroke();
-
-                    // Camera Box
-                    ctx.strokeRect(8, -8, 12, 8);
-                    ctx.beginPath(); ctx.arc(14, -4, 3, 0, Math.PI * 2); ctx.stroke(); // Lens
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("Say Cheese!", -60, -40);
-
-                } else if (navHover === 'Contact') {
-                    // Envelope
-                    ctx.moveTo(0, -5); ctx.lineTo(15, -5);
-                    ctx.moveTo(0, -5); ctx.lineTo(0, 10);
-                    ctx.stroke();
-
-                    // Envelope Rect
-                    ctx.strokeRect(15, -10, 14, 10);
-                    ctx.beginPath(); ctx.moveTo(15, -10); ctx.lineTo(22, -3); ctx.lineTo(29, -10); ctx.stroke();
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("Hmu!", -30, -40);
-
-                } else if (navHover === 'Experience') {
-                    // Star
-                    ctx.moveTo(0, -5); ctx.lineTo(15, -10);
-                    ctx.moveTo(0, -5); ctx.lineTo(-10, 10);
-                    ctx.stroke();
-
-                    // Draw Star
-                    ctx.save();
-                    ctx.translate(20, -15);
-                    ctx.scale(0.5, 0.5);
-                    ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); ctx.stroke();
-                    ctx.restore();
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("The Grind.", -50, -40);
-
-                } else if (navHover === 'About me') {
-                    // Point at self
-                    ctx.moveTo(0, -5); ctx.lineTo(-5, -15); // Thumb pointing self
-                    ctx.moveTo(0, -5); ctx.lineTo(10, 10);
-                    ctx.stroke();
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("It's me!", -40, -40);
-
-                } else if (navHover === 'Home') {
-                    // Static neutral pose for Home
-                    ctx.moveTo(0, -5); ctx.lineTo(-15, 15);
-                    ctx.moveTo(0, -5); ctx.lineTo(15, 15);
-                    ctx.stroke();
-
-                    ctx.font = '14px "Patrick Hand", sans-serif';
-                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("Back to Base", -60, -40);
-
+                } else if (navHover && navHover !== 'Home') {
+                    if (navHover === 'Projects') {
+                        ctx.moveTo(0, -5); ctx.lineTo(15, 0);
+                        ctx.moveTo(0, -5); ctx.lineTo(-10, 10);
+                        ctx.stroke();
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(15, 0); ctx.lineTo(25, -10);
+                        ctx.moveTo(22, -13); ctx.lineTo(28, -7);
+                        ctx.stroke();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("Let's Build!", -60, -40);
+                    } else if (navHover === 'Gallery') {
+                        ctx.moveTo(0, -5); ctx.lineTo(10, -5);
+                        ctx.moveTo(0, -5); ctx.lineTo(5, 0);
+                        ctx.stroke();
+                        ctx.strokeRect(8, -8, 12, 8);
+                        ctx.beginPath(); ctx.arc(14, -4, 3, 0, Math.PI * 2); ctx.stroke();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("Say Cheese!", -60, -40);
+                    } else if (navHover === 'Contact') {
+                        ctx.moveTo(0, -5); ctx.lineTo(15, -5);
+                        ctx.moveTo(0, -5); ctx.lineTo(0, 10);
+                        ctx.stroke();
+                        ctx.strokeRect(15, -10, 14, 10);
+                        ctx.beginPath(); ctx.moveTo(15, -10); ctx.lineTo(22, -3); ctx.lineTo(29, -10); ctx.stroke();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("Hmu!", -30, -40);
+                    } else if (navHover === 'Experience' || navHover === 'Skills') {
+                        ctx.moveTo(0, -5); ctx.lineTo(15, -10);
+                        ctx.moveTo(0, -5); ctx.lineTo(-10, 10);
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.translate(20, -15);
+                        ctx.scale(0.5, 0.5);
+                        ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); ctx.stroke();
+                        ctx.restore();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("The Grind.", -50, -40);
+                    } else if (navHover === 'About me') {
+                        ctx.moveTo(0, -5); ctx.lineTo(-5, -15);
+                        ctx.moveTo(0, -5); ctx.lineTo(10, 10);
+                        ctx.stroke();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("It's me!", -40, -40);
+                    }
                 } else if (isSurprised) {
-                    // Arms out/down instead of up (avoid head vibration look)
-                    ctx.moveTo(0, -5); ctx.lineTo(-25, 5); // L Arm Out
-                    ctx.moveTo(0, -5); ctx.lineTo(25, 5); // R Arm Out
+                    ctx.moveTo(0, -5); ctx.lineTo(-25, 5);
+                    ctx.moveTo(0, -5); ctx.lineTo(25, 5);
                     ctx.stroke();
-
-                    // Mouth O
                     ctx.beginPath(); ctx.arc(0, -15, 2, 0, Math.PI * 2); ctx.stroke();
-                    // Text
                     ctx.font = '14px "Patrick Hand", sans-serif';
                     ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
-                    ctx.fillText("Hey hey dont hurt me,", -80, -60);
-                    ctx.fillText("but welcome to Geervan's portfolio!", -110, -45);
+                    ctx.fillText("Hey hey dont hurt me!", -70, -45);
+
+                } else if (showWelcomeRef.current) {
+                    // Welcome Waving Pose
+                    ctx.moveTo(0, -5); ctx.lineTo(-10, 15);
+                    const waveAngle = Math.sin(time * 0.15) * 0.3;
+                    ctx.moveTo(0, -5);
+                    ctx.lineTo(Math.cos(-Math.PI / 3 + waveAngle) * 20, Math.sin(-Math.PI / 3 + waveAngle) * 20);
+                    ctx.stroke();
+
+                    // Speech bubble frame (ends earlier on the right to avoid screen edge clipping)
+                    ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.strokeRect(-114, -56, 174, 26);
+                    ctx.moveTo(-10, -32);
+                    ctx.lineTo(0, -24);
+                    ctx.lineTo(10, -32);
+                    ctx.stroke();
+
+                    // Welcome phrase text (13px font)
+                    ctx.font = '13px "Patrick Hand", sans-serif';
+                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                    ctx.fillText("Welcome to Geervan's portfolio", -107, -40);
 
                 } else if (isIdle) {
-                    ctx.moveTo(0, -5); ctx.lineTo(-10, 5); // L Arm Relaxed
-                    ctx.moveTo(0, -5); ctx.lineTo(12, -10); // R Arm Holding Cup
+                    ctx.moveTo(0, -5); ctx.lineTo(-10, 5);
+                    ctx.moveTo(0, -5); ctx.lineTo(12, -10);
                     ctx.stroke();
-
-                    // Draw Cup
                     ctx.save();
                     ctx.translate(15, -12);
                     ctx.scale(0.5, 0.5);
@@ -323,37 +324,17 @@ export default function InteractiveDoodles() {
                     ctx.moveTo(-8, -8); ctx.lineTo(-8, 8); ctx.bezierCurveTo(-8, 12, 8, 12, 8, 8); ctx.lineTo(8, -8); ctx.stroke();
                     ctx.beginPath(); ctx.moveTo(8, -4); ctx.bezierCurveTo(12, -4, 12, 4, 8, 4); ctx.stroke();
                     ctx.restore();
-
-                    // Coffee Bubble
                     ctx.font = '14px "Patrick Hand", sans-serif';
                     ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                     ctx.fillText("Ooh Coffee!", -60, -35);
 
                 } else {
-                    // Neutral Standing (No Wave)
-                    ctx.moveTo(0, -5); ctx.lineTo(-5, 15); // L Arm down
-                    ctx.moveTo(0, -5); ctx.lineTo(5, 15); // R Arm down
+                    ctx.moveTo(0, -5); ctx.lineTo(-5, 15);
+                    ctx.moveTo(0, -5); ctx.lineTo(5, 15);
                     ctx.stroke();
                 }
             } else {
-                // Speed lines behind the doodle to suggest motion
-                const lineAlpha = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-                ctx.strokeStyle = lineAlpha;
-                ctx.lineWidth = 1;
-                const cos = Math.cos(d.motionAngle);
-                const sin = Math.sin(d.motionAngle);
-                const len = d.motionLen;
-                // 3 trailing speed lines
-                for (let i = 0; i < 3; i++) {
-                    const offset = (i + 1) * 6;
-                    const spread = (i - 1) * 5;
-                    ctx.beginPath();
-                    ctx.moveTo(-cos * offset + sin * spread, -sin * offset - cos * spread);
-                    ctx.lineTo(-cos * (offset + len) + sin * spread, -sin * (offset + len) - cos * spread);
-                    ctx.stroke();
-                }
-
-                // Main Shape
+                // Background Doodles
                 drawShape(ctx, d.type);
             }
             ctx.restore();
@@ -385,15 +366,7 @@ export default function InteractiveDoodles() {
                     isSurprisedRef.current = isSurprised;
                     drawDoodle(ctx, d, isNear, isSurprised, isIdle);
                 } else {
-                    // Gentle drift
-                    d.x += Math.cos(d.motionAngle) * 0.15;
-                    d.y += Math.sin(d.motionAngle) * 0.15;
-                    // Wrap around edges
-                    if (d.x < -30) d.x = canvas.width + 30;
-                    if (d.x > canvas.width + 30) d.x = -30;
-                    if (d.y < -30) d.y = canvas.height + 30;
-                    if (d.y > canvas.height + 30) d.y = -30;
-
+                    // Background doodles stay completely static
                     drawDoodle(ctx, d, false, false, isIdle);
                 }
             });

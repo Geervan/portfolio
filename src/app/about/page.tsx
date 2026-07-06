@@ -9,22 +9,18 @@ export default function About() {
                     <p style={{ fontSize: '1.8rem', color: 'var(--secondary-text)', fontFamily: 'var(--font-heading)', transform: 'rotate(-1deg)', display: 'inline-block' }}>
                         Behind the code.
                     </p>
-                    
+
                     <div style={{ marginTop: '2rem', maxWidth: '600px' }}>
                         <p style={{ fontSize: '1.2rem', lineHeight: '1.8', marginBottom: '1.2rem' }}>
-                            Currently a CS Undergrad at <strong>Manipal University Jaipur</strong>, I view code as a construction 
-                            site where the scaffolding is just as interesting as the finished building. I have a drive for 
-                            breaking complex systems just to see how to build them back better.
+                            Currently a CS Undergrad at <strong>Manipal University Jaipur</strong>, where I enjoy working on problems that sit between engineering and product design. Most of my projects begin with a small frustration that grows into an opportunity to rethink the experience. I pay attention to the details that often go unnoticed, from awkward interactions to unnecessary friction.
                         </p>
+
                         <p style={{ fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '1.2rem' }}>
-                            I specialize in the intersection of <strong>Interactive Systems</strong> and <strong>Mathematical Logic</strong>. 
-                            Whether I'm diving into 3D rendering with Three.js or architecting custom cryptographic engines, I try to 
-                            ensure that the logic never sacrifices the aesthetic.
+                            Whether I'm building AI applications, interactive web experiences, or developer tools, I care as much about how software feels as how it works. I enjoy understanding systems from the inside out and reshaping familiar ideas into something simpler, faster, and more intuitive.
                         </p>
+
                         <p style={{ fontSize: '1.1rem', lineHeight: '1.7' }}>
-                            Beyond the terminal, I'm obsessed with "tactile" digital experiences. I believe the best products 
-                            should feel organic and responsive, moving away from the standard "boxed" web and toward 
-                            interfaces that feel like extensions of human thought.
+                            For me, every project starts with curiosity. If something makes someone's workflow smoother or leaves them wondering why every app doesn't work this way, then I've done my job.
                         </p>
                     </div>
                 </div>
@@ -44,12 +40,12 @@ export default function About() {
                 <div>
                     <h2 style={{ marginTop: 0, borderBottom: '2px dashed var(--line-color)', paddingBottom: '0.5rem' }}>Design Philosophy</h2>
                     <p style={{ fontSize: '1.1rem', lineHeight: '1.8' }}>
-                        I call it <strong>"Living Blueprints"</strong>. The web has become too predictable and boxed in. 
-                        I try to create experiences that are tactile, reactive, and occasionally a little bit weird.
+                        I call it <strong>"Living Blueprints"</strong>. I see software as something that should evolve with the person using it. Good interfaces are not made by adding more features,
+                        but by removing unnecessary friction and making complex ideas feel simple.
                     </p>
                     <p style={{ fontSize: '1.1rem', lineHeight: '1.8' }}>
-                        My toolkit balances the rigid precision of <strong>TypeScript</strong> and <strong>C++</strong> with 
-                        the creative freedom of <strong>Three.js</strong> and <strong>Interactive Doodling</strong>.
+                        My toolkit balances the rigid precision of <strong>TypeScript</strong> and <strong>Flutter</strong> with
+                        the creative freedom of <strong>curiosity</strong> and <strong>having fun!</strong>
                     </p>
                 </div>
 
@@ -59,12 +55,12 @@ export default function About() {
                     <div style={{ marginTop: '1.5rem', borderLeft: '3px solid var(--text-color)', paddingLeft: '1.5rem' }}>
                         <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>Manipal University Jaipur</h3>
                         <p style={{ margin: 0, fontWeight: 'bold', fontSize: '1.2rem' }}>B.Tech - Computer Science & Engineering</p>
-                        <p style={{ margin: 0, color: 'var(--secondary-text)', fontSize: '1.1rem' }}>2024 - 2028 | GPA: 9.33 / 10.0</p>
+                        <p style={{ margin: 0, color: 'var(--secondary-text)', fontSize: '1.1rem' }}>2024 - 2028 | GPA: 9.34 / 10.0</p>
                     </div>
 
                     <div style={{ marginTop: '2rem', padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '8px', opacity: 0.8 }}>
                         <p style={{ margin: 0, fontSize: '0.9rem', fontStyle: 'italic', color: 'var(--secondary-text)' }}>
-                            "Currently exploring the intersection of mathematical curiosities and interactive web art."
+                            "Curiosity has always been my favorite debugging tool."
                         </p>
                     </div>
                 </div>

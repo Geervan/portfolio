@@ -1,4 +1,5 @@
 import TactileButton from "@/components/TactileButton";
+import GithubGraph from "@/components/GithubGraph";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
         <div className="joke-arrow desktop-only" style={{ position: 'absolute', top: '0px', right: '-40px', zIndex: 5, pointerEvents: 'none' }}>
           <svg width="200" height="200" viewBox="0 0 200 200" style={{ overflow: 'visible' }}>
             {/* Arrow curving from right side of polaroid upwards to the left */}
-            <path d="M 170 160 Q 180 80 40 40" fill="none" stroke="#e53935" strokeWidth="2.5" strokeDasharray="6,4" markerEnd="url(#arrowhead)" strokeLinecap="round" />
+            <path d="M 170 160 Q 180 80 40 40" fill="none" stroke="#e53935" strokeWidth="2.5" markerEnd="url(#arrowhead)" strokeLinecap="round" />
             <defs>
               <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
                 <path d="M0,0 L12,6 L0,12" fill="none" stroke="#e53935" strokeWidth="2" />
@@ -46,7 +47,7 @@ export default function Home() {
             Aspiring AI/Technical PM || Aspiring SDE
           </p>
 
-          <p style={{ fontSize: '1.4rem', marginTop: '1.5rem', lineHeight: '1.6', maxWidth: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ fontSize: '1.4rem', marginTop: '1.5rem', lineHeight: '1.6', maxWidth: '90%' }}>
             Bridging the gap between Engineering and Product Thinking.
             <br />
             Currently obsessed with <span className="tech-note">LLMs, Agents</span> and <span className="tech-note">Product,UX</span>.
@@ -56,9 +57,9 @@ export default function Home() {
 
           {/* Desk Info Stack */}
           <div className="sticky-stack" style={{ marginTop: '2rem' }}>
-            <p style={{ margin: 0, borderBottom: '1px dashed #333', paddingBottom: '0.2rem' }}>✓ Shipped 3 Projects</p>
+            <p style={{ margin: 0, borderBottom: '1px dashed #333', paddingBottom: '0.2rem' }}>[x] Shipped 3 Projects</p>
             <p style={{ margin: '0.5rem 0', borderBottom: '1px dashed #333', paddingBottom: '0.2rem' }}>Currently: Product & LLMs</p>
-            <p style={{ margin: 0 }}>Status: <b>Caffeinated ☕</b></p>
+            <p style={{ margin: 0 }}>Status: <b>Caffeinated</b></p>
           </div>
 
           {/* New Stack Card (Messy Pile) */}
@@ -96,8 +97,8 @@ export default function Home() {
                 <span key={t} style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{t} •</span>
               ))}
             </div>
-            <a href="/experience#skills" style={{ display: 'block', marginTop: '1rem', fontSize: '0.9rem', color: '#e53935', fontWeight: 'bold', textDecoration: 'none' }}>
-              Click to see full skillset ➔
+            <a href="/skills" style={{ display: 'block', marginTop: '1rem', fontSize: '0.9rem', color: '#e53935', fontWeight: 'bold', textDecoration: 'none' }}>
+              Click to see full skillset {"->"}
             </a>
           </div>
 
@@ -133,26 +134,61 @@ export default function Home() {
       <div className="coffee-stain" style={{ top: '10%', left: '-50px', transform: 'rotate(-10deg)' }}></div>
       <div className="coffee-stain" style={{ bottom: '20%', right: '-40px', width: '100px', height: '100px', opacity: 0.5 }}></div>
 
-      {/* Margin Notes / Quick Links Area */}
-      <section className="section" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <div style={{ flex: 1, minWidth: '300px', border: '2px dashed var(--border-color)', padding: '2rem', borderRadius: '10px 50px 10px 50px', position: 'relative' }}>
-          <h2>Quick Notes</h2>
-          <ul className="handwritten" style={{ listStyle: 'none', fontSize: '1.3rem' }}>
-            <li style={{ marginBottom: '1rem' }}>✓ Refactor Portfolio</li>
-            <li style={{ marginBottom: '1rem' }}>☐ Launch something cool and Agentic</li>
-            <li style={{ marginBottom: '1rem' }}>✓ Fix PR Bot</li>
-            <li>☐ Sleep?</li>
-          </ul>
-        </div>
+      {/* Code Ledger & Sticky Notes Section */}
+      <section className="section" style={{ marginTop: '4rem', clear: 'both' }}>
+        <GithubGraph />
 
-        <div style={{ flex: 1, minWidth: '300px', border: '2px dashed var(--border-color)', padding: '2rem', borderRadius: '50px 10px 50px 10px', position: 'relative' }}>
-          <h2>Scribbles</h2>
-          <p style={{ fontSize: '1.4rem', lineHeight: '2' }}>
-            Check out my <a href="/projects" className="scribble-link">Projects</a> page for chaos.
-          </p>
-          <p style={{ fontSize: '1.4rem', lineHeight: '2' }}>
-            Or see the <a href="/gallery" className="scribble-link">Gallery</a> to see who I am behind the Screen
-          </p>
+        {/* Quick links & annotations underneath the graph */}
+        <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            flexWrap: 'wrap',
+            gap: '2rem',
+            marginTop: '3rem'
+        }}>
+            {/* Scribbles Sticky Note */}
+            <div style={{
+                background: '#ffeb3b',
+                color: '#333',
+                padding: '1.5rem',
+                borderRadius: '2px',
+                boxShadow: '3px 3px 0px #e6d335, 6px 6px 8px rgba(0,0,0,0.15)',
+                transform: 'rotate(-1.5deg)',
+                fontFamily: 'var(--font-heading)',
+                flex: 1,
+                minWidth: '280px',
+                maxWidth: '450px'
+            }}>
+                <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.8rem 0', borderBottom: '2px solid #333', paddingBottom: '0.2rem', fontWeight: 'bold' }}>SCRIBBLES & NAVIGATION</h3>
+                <p style={{ fontSize: '1.15rem', margin: '0.5rem 0', lineHeight: '1.5' }}>
+                    {"->"} Check out the <a href="/projects" style={{ textDecoration: 'underline', fontWeight: 'bold', color: '#e53935' }}>Projects</a> page for chaotic creations.
+                </p>
+                <p style={{ fontSize: '1.15rem', margin: '0.5rem 0', lineHeight: '1.5' }}>
+                    {"->"} See the <a href="/gallery" style={{ textDecoration: 'underline', fontWeight: 'bold', color: '#e53935' }}>Gallery</a> to see me behind the screen.
+                </p>
+            </div>
+
+            {/* Dev Logs Sticky Note */}
+            <div style={{
+                background: '#e0f7fa',
+                color: '#006064',
+                padding: '1.5rem',
+                borderRadius: '2px',
+                boxShadow: '3px 3px 0px #b2ebf2, 6px 6px 8px rgba(0,0,0,0.15)',
+                transform: 'rotate(1.5deg)',
+                fontFamily: 'var(--font-heading)',
+                flex: 1,
+                minWidth: '280px',
+                maxWidth: '450px'
+            }}>
+                <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.8rem 0', borderBottom: '2px solid #006064', paddingBottom: '0.2rem', fontWeight: 'bold' }}>QUICK LOG</h3>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, lineHeight: '1.6', fontSize: '1.1rem' }}>
+                    <li>[x] Refactored loose-leaf layout</li>
+                    <li>[x] Separated skills view</li>
+                    <li>[ ] Sleep & drink more water?</li>
+                </ul>
+            </div>
         </div>
       </section>
     </>

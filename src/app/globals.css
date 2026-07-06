@@ -40,6 +40,7 @@ body {
   /* Pencil Cursor */
   cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L12 28L16 16L28 12L2 2Z' fill='%232e2e2e' stroke='%23f0f0f0' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 1 1,
     auto;
+  scroll-behavior: smooth;
 }
 
 [data-theme="light"] html,
@@ -263,7 +264,7 @@ a {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   z-index: 1000;
 
   background-color: var(--bg-color);
@@ -430,7 +431,7 @@ a {
 }
 
 .sticky-stack::before {
-  content: "TOP SKILLS";
+  content: "CURRENT STATUS";
   position: absolute;
   top: -12px;
   right: 10px;
@@ -597,6 +598,12 @@ a {
     text-align: center;
     width: 100%;
     margin-bottom: 2rem;
+  }
+
+  .home-intro p {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 
   .project-list {
@@ -873,4 +880,29 @@ a {
   }
 
   /* Mobile Highlighter Styles Removed */
+}
+
+/* ─── GitHub Calendar Tooltips ───────────────────────────────── */
+.react-activity-calendar__tooltip {
+  background: var(--text-color) !important;
+  color: var(--bg-color) !important;
+  font-family: var(--font-heading) !important;
+  font-size: 0.85rem !important;
+  padding: 5px 10px !important;
+  border-radius: 3px !important;
+  border: 1px solid var(--text-color) !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+}
+
+/* Calendar text (month/day labels) match theme */
+.react-activity-calendar text {
+  fill: var(--secondary-text) !important;
+  font-family: var(--font-heading) !important;
+}
+
+/* Calendar block rounded corners subtle */
+.react-activity-calendar__calendar rect {
+  rx: 2 !important;
 }

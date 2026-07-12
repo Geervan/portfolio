@@ -12,6 +12,24 @@ export default function Navigation() {
         setIsOpen(false);
     }, [pathname]);
 
+    // Lock background scroll and hide dock when mobile drawer is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            document.body.classList.add('mobile-menu-open');
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            document.body.classList.remove('mobile-menu-open');
+        }
+        return () => {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            document.body.classList.remove('mobile-menu-open');
+        };
+    }, [isOpen]);
+
     const links = [
         { href: "/", label: "Home" },
         { href: "/projects", label: "Projects" },

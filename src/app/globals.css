@@ -698,6 +698,7 @@ a {
   /* Above everything */
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .mobile-menu.open {
@@ -736,7 +737,7 @@ a {
 
   /* Existing styles... ensure they don't conflict */
   .container {
-    padding-top: 6rem;
+    padding-top: 5.2rem;
   }
 }
 
@@ -955,4 +956,8 @@ a {
 /* Calendar block rounded corners subtle */
 .react-activity-calendar__calendar rect {
   rx: 2 !important;
+}
+
+body.mobile-menu-open .mobile-dock {
+  display: none !important;
 }

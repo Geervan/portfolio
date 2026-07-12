@@ -248,6 +248,28 @@ export default function InteractiveDoodles() {
                         ctx.stroke();
                         ctx.strokeRect(8, -8, 12, 8);
                         ctx.beginPath(); ctx.arc(14, -4, 3, 0, Math.PI * 2); ctx.stroke();
+                        
+                        // Flashing camera bulb animation (fires for 10 frames, recharges for 50 frames)
+                        const flashCycle = time % 60;
+                        if (flashCycle < 10) {
+                            ctx.save();
+                            ctx.strokeStyle = "#ffeb3b";
+                            ctx.lineWidth = 1.5;
+                            ctx.beginPath();
+                            ctx.moveTo(8, -8); ctx.lineTo(3, -13);
+                            ctx.moveTo(8, -8); ctx.lineTo(8, -15);
+                            ctx.moveTo(8, -8); ctx.lineTo(13, -13);
+                            ctx.stroke();
+                            
+                            ctx.fillStyle = "#ffffff";
+                            ctx.shadowColor = "#ffeb3b";
+                            ctx.shadowBlur = 8;
+                            ctx.beginPath();
+                            ctx.arc(8, -8, 2, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.restore();
+                        }
+
                         ctx.font = '14px "Patrick Hand", sans-serif';
                         ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                         ctx.fillText("Say Cheese!", -60, -40);
@@ -257,21 +279,71 @@ export default function InteractiveDoodles() {
                         ctx.stroke();
                         ctx.strokeRect(15, -10, 14, 10);
                         ctx.beginPath(); ctx.moveTo(15, -10); ctx.lineTo(22, -3); ctx.lineTo(29, -10); ctx.stroke();
+                        
+                        // Red wax seal detail
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(22, -3, 1.5, 0, Math.PI * 2);
+                        ctx.fillStyle = "#e53935"; // wax seal red
+                        ctx.fill();
+                        ctx.restore();
+
                         ctx.font = '14px "Patrick Hand", sans-serif';
                         ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                         ctx.fillText("Hmu!", -30, -40);
-                    } else if (navHover === 'Experience' || navHover === 'Skills') {
+                    } else if (navHover === 'Experience') {
                         ctx.moveTo(0, -5); ctx.lineTo(15, -10);
                         ctx.moveTo(0, -5); ctx.lineTo(-10, 10);
                         ctx.stroke();
                         ctx.save();
                         ctx.translate(20, -15);
                         ctx.scale(0.5, 0.5);
-                        ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); ctx.stroke();
+                        
+                        // Yellow glowing star
+                        ctx.fillStyle = "#ffeb3b";
+                        ctx.strokeStyle = "#ffd600";
+                        ctx.shadowColor = "#ffeb3b";
+                        ctx.shadowBlur = 8;
+                        
+                        ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(2, -2); ctx.lineTo(10, 0); ctx.lineTo(2, 2); ctx.lineTo(0, 10); ctx.lineTo(-2, 2); ctx.lineTo(-10, 0); ctx.lineTo(-2, -2); ctx.closePath(); 
+                        ctx.fill();
+                        ctx.stroke();
+                        
                         ctx.restore();
                         ctx.font = '14px "Patrick Hand", sans-serif';
                         ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                         ctx.fillText("The Grind.", -50, -40);
+                    } else if (navHover === 'Skills') {
+                        ctx.moveTo(0, -5); ctx.lineTo(15, -5);
+                        ctx.moveTo(0, -5); ctx.lineTo(-10, 10);
+                        ctx.stroke();
+                        ctx.save();
+                        ctx.translate(22, -5);
+                        ctx.scale(0.6, 0.6);
+                        
+                        // Arc Reactor Glow
+                        ctx.strokeStyle = "#00d2ff";
+                        ctx.shadowColor = "#00f0ff";
+                        ctx.shadowBlur = 10;
+                        
+                        ctx.beginPath();
+                        for (let i = 0; i < 6; i++) {
+                            ctx.rotate(Math.PI / 3); ctx.moveTo(6, -4); ctx.lineTo(9, -4); ctx.lineTo(9, 4); ctx.lineTo(6, 4);
+                        }
+                        ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.stroke();
+                        
+                        // Reactor Core
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = "#ffffff";
+                        ctx.shadowBlur = 5;
+                        ctx.fill();
+                        ctx.stroke();
+                        
+                        ctx.restore();
+                        ctx.font = '14px "Patrick Hand", sans-serif';
+                        ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                        ctx.fillText("My Arsenal!", -50, -40);
                     } else if (navHover === 'About me') {
                         ctx.moveTo(0, -5); ctx.lineTo(-5, -15);
                         ctx.moveTo(0, -5); ctx.lineTo(10, 10);

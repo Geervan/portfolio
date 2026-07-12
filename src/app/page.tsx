@@ -39,8 +39,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="home-intro" style={{ flex: 1, minWidth: '300px', position: 'relative', zIndex: 2 }}>
-          <h1 style={{ fontSize: '4.5rem', marginBottom: '0.5rem' }}>
+        <div className="home-intro" style={{ flex: 1, minWidth: 'min(100%, 300px)', position: 'relative', zIndex: 2 }}>
+          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', marginBottom: '0.5rem' }}>
             <span className="pinned-paper">Geervan</span>
           </h1>
           <p style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', color: 'var(--secondary-text)', transform: 'rotate(1deg)' }}>
@@ -73,7 +73,7 @@ export default function Home() {
             borderRadius: '2px',
             boxShadow: '2px 2px 5px rgba(0,0,0,0.1)',
             transform: 'rotate(-2deg)',
-            maxWidth: '300px',
+            maxWidth: 'min(100%, 300px)',
             position: 'relative'
           }}>
             <div style={{
@@ -106,7 +106,7 @@ export default function Home() {
 
         </div>
 
-        <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '280px', flexShrink: 0, position: 'relative' }}>
+        <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '100%', maxWidth: '280px', flexShrink: 0, position: 'relative' }}>
           {/* Tape holding the photo */}
           <div className="tape"></div>
 
@@ -157,7 +157,7 @@ export default function Home() {
                 transform: 'rotate(-1.5deg)',
                 fontFamily: 'var(--font-heading)',
                 flex: 1,
-                minWidth: '280px',
+                minWidth: 'min(100%, 280px)',
                 maxWidth: '450px'
             }}>
                 <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.8rem 0', borderBottom: '2px solid #333', paddingBottom: '0.2rem', fontWeight: 'bold' }}>SCRIBBLES & NAVIGATION</h3>
@@ -179,7 +179,7 @@ export default function Home() {
                 transform: 'rotate(1.5deg)',
                 fontFamily: 'var(--font-heading)',
                 flex: 1,
-                minWidth: '280px',
+                minWidth: 'min(100%, 280px)',
                 maxWidth: '450px'
             }}>
                 <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.8rem 0', borderBottom: '2px solid #006064', paddingBottom: '0.2rem', fontWeight: 'bold' }}>QUICK LOG</h3>

@@ -2,7 +2,7 @@ export default function About() {
     return (
         <section className="section">
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
-                <div style={{ flex: 1, minWidth: '300px' }}>
+                <div style={{ flex: 1, minWidth: 'min(100%, 300px)' }}>
                     <h1 style={{ marginBottom: '0.5rem', fontSize: '3.5rem' }}>
                         The Engineer
                     </h1>
@@ -27,7 +27,7 @@ export default function About() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Photo positioned parallel to Title but slightly lower */}
-                    <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '220px', flexShrink: 0, margin: '1.5rem 1rem 0 0' }}>
+                    <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '100%', maxWidth: '220px', flexShrink: 0, margin: '1.5rem 1rem 0 0' }}>
                         <div className="tape" style={{ left: '50%', top: '-15px', transform: 'translateX(-50%)', opacity: 0.8 }}></div>
                         <img src="/profile-pic.png" alt="Geervan" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center 20%', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                         <p style={{ textAlign: 'center', marginTop: '0.8rem', fontFamily: 'var(--font-heading)', fontSize: '0.9rem' }}>me, pretending to work.</p>
@@ -35,7 +35,7 @@ export default function About() {
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', marginTop: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '4rem', marginTop: '2rem' }}>
                 {/* Column 1: Philosophy */}
                 <div>
                     <h2 style={{ marginTop: 0, borderBottom: '2px dashed var(--line-color)', paddingBottom: '0.5rem' }}>Design Philosophy</h2>

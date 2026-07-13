@@ -567,7 +567,7 @@ a {
   background-image:
     radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.05) 100%),
     repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.02) 10px, rgba(0, 0, 0, 0.02) 11px);
-  
+
   /* Randomly Torn on ALL Sides */
   clip-path: polygon(2% 5%, 8% 2%, 15% 5%, 25% 1%, 35% 4%, 45% 2%, 55% 5%, 65% 1%, 75% 4%, 85% 2%, 95% 5%, 100% 0%,
       98% 10%, 95% 20%, 99% 30%, 96% 40%, 98% 50%, 95% 60%, 99% 70%, 96% 80%, 98% 90%, 100% 100%,
@@ -580,7 +580,8 @@ a {
 .pinned-paper::after {
   content: "";
   position: absolute;
-  top: -12px; /* Positioned at the very top edge so it pins the paper */
+  top: -12px;
+  /* Positioned at the very top edge so it pins the paper */
   left: 50%;
   transform: translateX(-50%);
   width: 24px;
@@ -960,4 +961,260 @@ a {
 
 body.mobile-menu-open .mobile-dock {
   display: none !important;
+}
+
+/* ─── Guestbook Corkboard (Softboard) Styles ─────────────────── */
+
+.softboard-container {
+  display: flex;
+  flex-direction: column;
+  border: 12px solid #5d4037;
+  /* Wooden frame */
+  border-radius: 8px;
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
+[data-theme='light'] .softboard-container {
+  border-color: #8d6e63;
+  /* Light wood frame */
+}
+
+/* Corkboard/Softboard Texture */
+.softboard-bg {
+  background-color: #2b2b2b;
+  background-image:
+    radial-gradient(#3a3a3a 15%, transparent 16%),
+    radial-gradient(#1f1f1f 15%, transparent 16%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  padding: 2.5rem;
+  min-height: 500px;
+  position: relative;
+  column-width: 250px;
+  column-gap: 2.5rem;
+}
+
+[data-theme='light'] .softboard-bg {
+  background-color: #d7b594;
+  /* Sandy warm cork base */
+  background-image:
+    radial-gradient(#e5c7a9 15%, transparent 16%),
+    radial-gradient(#c29871 15%, transparent 16%);
+}
+
+/* Post-it Notes */
+.post-it {
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  min-height: 130px;
+  /* Reduced minimum height */
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: 2.5rem;
+  border-radius: 2px 2px 2px 2px / 2px 2px 2px 2px;
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+/* Wobbly shape deviations */
+.post-it:nth-child(3n) {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+.post-it:nth-child(3n+1) {
+  border-radius: 15px 225px 12px 255px / 255px 12px 255px 15px;
+}
+
+.post-it:nth-child(3n+2) {
+  border-radius: 20px 10px 250px 12px / 15px 250px 10px 220px;
+}
+
+/* Post-it Color Themes (Optimized for readability) */
+.post-it-yellow {
+  background-color: #fff9c4;
+  /* Pastel yellow */
+  border-left: 5px solid #fbc02d;
+  color: #212121;
+}
+
+.post-it-blue {
+  background-color: #e1f5fe;
+  /* Pastel cyan */
+  border-left: 5px solid #0288d1;
+  color: #01579b;
+}
+
+.post-it-pink {
+  background-color: #fce4ec;
+  /* Pastel pink */
+  border-left: 5px solid #e91e63;
+  color: #880e4f;
+}
+
+.post-it-green {
+  background-color: #e8f5e9;
+  /* Pastel green */
+  border-left: 5px solid #4caf50;
+  color: #1b5e20;
+}
+
+/* Pushpin Detail */
+.pushpin {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(2px 4px 3px rgba(0, 0, 0, 0.4));
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.post-it:hover .pushpin {
+  transform: translateX(-50%) rotate(5deg) translateY(-1px);
+}
+
+/* Color Swatches for Selection */
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.color-swatch:hover {
+  transform: scale(1.15) rotate(-3deg);
+}
+
+.color-swatch.selected {
+  border-color: var(--text-color);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Admin Eraser/Delete Button */
+.admin-delete-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.15;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  color: inherit;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-it:hover .admin-delete-btn {
+  opacity: 0.7;
+}
+
+.admin-delete-btn:hover {
+  opacity: 1 !important;
+  transform: scale(1.2) rotate(-10deg);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Honeypot field (hidden completely from humans) */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  z-index: -1;
+}
+
+/* Scrollboard Empty state message */
+.board-empty-note {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 3rem;
+  transform: rotate(-1deg);
+}
+
+[data-theme='light'] .board-empty-note {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Hide mobile dock on the guestbook page */
+body.guestbook-page .mobile-dock {
+  display: none !important;
+}
+
+/* Expand board container sideways on the guestbook page */
+body.guestbook-page .container {
+  max-width: 1400px;
+}
+
+/* Guestbook Header Layout (Centered Title & Left-aligned Button on Desktop) */
+.guestbook-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3.5rem;
+  position: relative;
+  min-height: 80px;
+  width: 100%;
+}
+
+.guestbook-back-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+@media (min-width: 769px) {
+  .guestbook-back-btn {
+    position: absolute;
+    left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .guestbook-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: auto;
+  }
+}
+
+/* Hero Polaroid Package Wrapper offsets */
+.hero-polaroid-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 280px;
+  margin: 2rem auto 0 auto;
+}
+
+@media (min-width: 1025px) {
+  .hero-polaroid-wrapper {
+    top: -40px;
+    left: 40px;
+    margin: 0;
+  }
 }

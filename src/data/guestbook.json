@@ -1,0 +1,74 @@
+[
+  {
+    "id": "5d29d33f-b004-4e39-bba5-2265a91909d4",
+    "name": "Anonymous",
+    "message": "DJ TILLUUUUUU",
+    "color": "yellow",
+    "font": "patrick",
+    "createdAt": "2026-07-13T18:24:02.419Z"
+  },
+  {
+    "id": "mock-entry-8",
+    "name": "DevGuy",
+    "message": "Coffee check: ☕ caffeinated and active!",
+    "color": "green",
+    "font": "patrick",
+    "createdAt": "2026-07-13T16:50:00.000Z"
+  },
+  {
+    "id": "mock-entry-7",
+    "name": "Secret Scribbler",
+    "message": "Hello from San Francisco! 🌁 Awesome portfolio.",
+    "color": "blue",
+    "font": "indie",
+    "createdAt": "2026-07-13T16:05:00.000Z"
+  },
+  {
+    "id": "mock-entry-6",
+    "name": "Marcus Aurelius",
+    "message": "Very neat layout, the paper texture and custom pencil cursors fit together so harmoniously. It actually feels like interacting with a real desk blotter.",
+    "color": "pink",
+    "font": "caveat",
+    "createdAt": "2026-07-13T15:10:00.000Z"
+  },
+  {
+    "id": "mock-entry-5",
+    "name": "DoodleFan",
+    "message": "Scribbled!",
+    "color": "yellow",
+    "font": "marker",
+    "createdAt": "2026-07-13T14:45:00.000Z"
+  },
+  {
+    "id": "mock-entry-4",
+    "name": "TechRecruiter99",
+    "message": "Hi Geervan! Super impressed by the UX details here. Let's connect on LinkedIn, I'd love to chat about potential AI Product Manager opportunities!",
+    "color": "green",
+    "font": "patrick",
+    "createdAt": "2026-07-13T14:02:00.000Z"
+  },
+  {
+    "id": "mock-entry-3",
+    "name": "Anonymous",
+    "message": "Wait, did you really delete the production database? 💀",
+    "color": "blue",
+    "font": "marker",
+    "createdAt": "2026-07-13T13:15:00.000Z"
+  },
+  {
+    "id": "mock-entry-2",
+    "name": "Sarah Jenkins",
+    "message": "Clean code, messy desk... just how it should be! Keep building awesome stuff.",
+    "color": "yellow",
+    "font": "indie",
+    "createdAt": "2026-07-13T12:30:00.000Z"
+  },
+  {
+    "id": "mock-entry-1",
+    "name": "Alex Rivier",
+    "message": "This is hands-down the most creative portfolio I've seen all year! The stickman holding coffee blew me away. Absolutely love the scrapbook style!",
+    "color": "pink",
+    "font": "caveat",
+    "createdAt": "2026-07-13T12:00:00.000Z"
+  }
+]

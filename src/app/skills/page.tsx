@@ -26,7 +26,7 @@ export default function Skills() {
     ];
 
     return (
-        <section className="section" style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <section className="section" style={{ maxWidth: '900px', margin: '0 auto', paddingBottom: '6rem' }}>
             <div style={{ textAlign: "center", marginBottom: "4rem" }}>
                 <h1 style={{ marginBottom: '1rem' }}>
                     <span className="pinned-paper">Technical Skills</span>
@@ -55,6 +55,7 @@ export default function Skills() {
                         }}
                     >
                         <h2 style={{
+
                             marginTop: 0,
                             borderBottom: '2px dashed var(--line-color)',
                             paddingBottom: '0.5rem',

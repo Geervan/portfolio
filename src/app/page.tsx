@@ -112,16 +112,16 @@ export default function Home() {
             <p style={{
               position: 'absolute',
               top: '140px',
-              left: '430px',
+              left: '440px',
               fontFamily: 'var(--font-heading)',
               fontSize: '1rem',
               fontWeight: 'bold',
               color: '#e53935',
-              width: '150px',
+              width: '200px',
               lineHeight: '1.2',
               transform: 'rotate(5deg)'
             }}>
-              (It's a joke! I won't actually do it... probably)
+              (It's a joke! I won't actually do it, probably XD)
             </p>
           </div>
 

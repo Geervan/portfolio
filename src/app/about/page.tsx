@@ -27,10 +27,10 @@ export default function About() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Photo positioned parallel to Title but slightly lower */}
-                    <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '100%', maxWidth: '220px', flexShrink: 0, margin: '1.5rem 1rem 0 0' }}>
+                    <div className="polaroid" style={{ transform: 'rotate(3deg)', width: '100%', maxWidth: '300px', flexShrink: 0, margin: '1.5rem 1rem 2.3rem 0' }}>
                         <div className="tape" style={{ left: '50%', top: '-15px', transform: 'translateX(-50%)', opacity: 0.8 }}></div>
                         <img src="/profile-pic.png" alt="Geervan" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center 20%', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
-                        <p style={{ textAlign: 'center', marginTop: '0.8rem', fontFamily: 'var(--font-heading)', fontSize: '0.9rem' }}>me, pretending to work.</p>
+                        <p style={{ textAlign: 'center', marginTop: '0.8rem', fontFamily: 'var(--font-heading)', fontSize: '1.2rem' }}>me, pretending to work.</p>
                     </div>
                 </div>
             </div>

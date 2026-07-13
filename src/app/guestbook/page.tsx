@@ -90,6 +90,18 @@ export default function GuestbookPage() {
     };
   }, []);
 
+  // Lock body scroll when the form popup is open (position:fixed needed for iOS)
+  useEffect(() => {
+    if (isFormOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [isFormOpen]);
+
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,12 +136,12 @@ export default function GuestbookPage() {
         setName("");
         setFont("patrick");
         setIsFormOpen(false);
-        
+
         // Prepend new entry
         if (data.entry) {
           setEntries((prev) => [data.entry, ...prev]);
         }
-        
+
         // Show temporary alert banner
         setSuccessMsg("Scribble pinned successfully! 📌");
         setTimeout(() => setSuccessMsg(null), 3000);
@@ -207,7 +219,7 @@ export default function GuestbookPage() {
         >
           {"<-"} Go Back to Desk
         </Link>
-        
+
         <h1 style={{ fontSize: "clamp(2.2rem, 6vw, 3.8rem)", margin: 0, textAlign: "center" }}>
           <span className="pinned-paper" style={{ padding: "0.8rem 2.5rem 1rem 2.5rem" }}>
             The Softboard
@@ -263,11 +275,11 @@ export default function GuestbookPage() {
       <div ref={boardRef} style={{ width: "100%" }} className="softboard-container">
         <div className="softboard-bg">
           {loading ? (
-            <div className="board-empty-note" style={{ animation: "pulse 1.5s infinite" }}>
+            <div style={{ columnSpan: 'all', textAlign: 'center', padding: '3rem 1rem', opacity: 0.5, fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--text-secondary)', animation: 'pulse 1.5s infinite' }}>
               Reading board notes... 🔍
             </div>
           ) : entries.length === 0 ? (
-            <div className="board-empty-note">
+            <div style={{ columnSpan: 'all', textAlign: 'center', padding: '3rem 1rem', opacity: 0.5, fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--text-secondary)' }}>
               Board is clean! Be the first to pin a scribble here. 📝
             </div>
           ) : (
@@ -366,10 +378,12 @@ export default function GuestbookPage() {
             justifyContent: "center",
             padding: "1rem",
             backdropFilter: "blur(3px)",
+            overflowY: "auto",
           }}
           onClick={() => setIsFormOpen(false)} // Close modal when clicking backdrop
         >
           <div
+            className="scribble-modal-card"
             style={{
               background: "var(--bg-color)",
               color: "var(--text-color)",

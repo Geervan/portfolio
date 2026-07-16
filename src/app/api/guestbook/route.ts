@@ -63,7 +63,10 @@ async function readEntries(): Promise<GuestbookEntry[]> {
       if (res.ok) {
         const json = await res.json();
         if (json.result) {
-          const parsed = JSON.parse(json.result);
+          let parsed = JSON.parse(json.result);
+          if (typeof parsed === 'string') {
+            parsed = JSON.parse(parsed);
+          }
           return Array.isArray(parsed) ? parsed : [];
         }
       }
@@ -105,7 +108,7 @@ async function writeEntries(entries: GuestbookEntry[]): Promise<boolean> {
           Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(JSON.stringify(entries)),
+        body: JSON.stringify(entries),
       });
       return res.ok;
     } catch (err) {

@@ -99,10 +99,10 @@ export default function Home() {
           />
 
           {/* Handwritten Joke Annotation Arrow */}
-          <div className="joke-arrow desktop-only" style={{ position: 'absolute', top: '-130px', left: '-140px', zIndex: 5, pointerEvents: 'none', width: '580px', height: '350px' }}>
-            <svg width="580" height="350" viewBox="0 0 580 350" style={{ overflow: 'visible' }}>
-              {/* Curve starting from text on top-right (430, 140), bending over polaroid top (300, 15), terminating cleanly right before the clipping border (175, 75) */}
-              <path d="M 430 140 Q 300 15 175 75" fill="none" stroke="#e53935" strokeWidth="2.5" markerEnd="url(#arrowhead)" strokeLinecap="round" />
+          <div className="joke-arrow desktop-only" style={{ position: 'absolute', top: '-130px', left: '-140px', zIndex: 5, pointerEvents: 'none', width: '580px', height: '380px' }}>
+            <svg width="580" height="380" viewBox="0 0 580 380" style={{ overflow: 'visible' }}>
+              {/* Curve starting from text on top-right (430, 195), bending over polaroid top (300, 15), terminating cleanly right before the clipping border (175, 75) */}
+              <path d="M 430 195 Q 470 20 175 75" fill="none" stroke="#e53935" strokeWidth="2.5" markerEnd="url(#arrowhead)" strokeLinecap="round" />
               <defs>
                 <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
                   <path d="M0,0 L12,6 L0,12" fill="none" stroke="#e53935" strokeWidth="2" />
@@ -111,7 +111,7 @@ export default function Home() {
             </svg>
             <p style={{
               position: 'absolute',
-              top: '140px',
+              top: '195px',
               left: '440px',
               fontFamily: 'var(--font-heading)',
               fontSize: '1rem',

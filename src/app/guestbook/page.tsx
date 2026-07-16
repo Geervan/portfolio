@@ -190,12 +190,16 @@ export default function GuestbookPage() {
     }
   };
 
-  // Get font styling class based on entry's saved font selection
-  const getHandwritingFontClass = (entry: GuestbookEntry) => {
-    if (entry.font === "caveat") return caveat.className;
-    if (entry.font === "indie") return indieFlower.className;
-    if (entry.font === "marker") return permanentMarker.className;
+  // Get font styling class based on selected font or entry font
+  const getFontClass = (f: "patrick" | "caveat" | "indie" | "marker") => {
+    if (f === "caveat") return caveat.className;
+    if (f === "indie") return indieFlower.className;
+    if (f === "marker") return permanentMarker.className;
     return ""; // Patrick Hand (default)
+  };
+
+  const getHandwritingFontClass = (entry: GuestbookEntry) => {
+    return getFontClass(entry.font || "patrick");
   };
 
   // Get deterministic tilt degree based on entry id
@@ -437,7 +441,7 @@ export default function GuestbookPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={25}
-                  className="notebook-input"
+                  className={`notebook-input ${getFontClass(font)}`}
                   style={{
                     fontSize: "1.1rem",
                     padding: "0.8rem",
@@ -459,13 +463,19 @@ export default function GuestbookPage() {
                   maxLength={150}
                   required
                   rows={4}
-                  className="notebook-input"
+                  className={`notebook-input ${getFontClass(font)}`}
                   style={{
-                    fontSize: "1.1rem",
+                    fontSize: "1.35rem",
                     padding: "0.8rem",
                     marginBottom: 0,
                     width: "100%",
                     resize: "none",
+                    backgroundColor: color === "yellow" ? "#fff9c4" : color === "blue" ? "#e1f5fe" : color === "pink" ? "#fce4ec" : "#e8f5e9",
+                    color: color === "yellow" ? "#212121" : color === "blue" ? "#01579b" : color === "pink" ? "#880e4f" : "#1b5e20",
+                    borderLeft: `5px solid ${
+                      color === "yellow" ? "#fbc02d" : color === "blue" ? "#0288d1" : color === "pink" ? "#e91e63" : "#4caf50"
+                    }`,
+                    transition: "background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease",
                   }}
                 />
                 <div style={{ textAlign: "right", fontSize: "0.9rem", marginTop: "0.3rem", opacity: 0.7 }}>

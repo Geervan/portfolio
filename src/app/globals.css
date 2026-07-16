@@ -1114,7 +1114,7 @@ body.mobile-menu-open .mobile-dock {
 /* Admin Eraser/Delete Button */
 .admin-delete-btn {
   position: absolute;
-  bottom: 8px;
+  top: 8px;
   right: 8px;
   background: none;
   border: none;

@@ -1,5 +1,5 @@
 /* Remove tap highlight on mobile browsers */
-/*html {
+html {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -7,7 +7,7 @@
 *::before,
 *::after {
   -webkit-tap-highlight-color: transparent;
-} */
+} 
 
 :root {
   /* Fonts */

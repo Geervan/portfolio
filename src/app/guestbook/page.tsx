@@ -472,9 +472,8 @@ export default function GuestbookPage() {
                     resize: "none",
                     backgroundColor: color === "yellow" ? "#fff9c4" : color === "blue" ? "#e1f5fe" : color === "pink" ? "#fce4ec" : "#e8f5e9",
                     color: color === "yellow" ? "#212121" : color === "blue" ? "#01579b" : color === "pink" ? "#880e4f" : "#1b5e20",
-                    borderLeft: `5px solid ${
-                      color === "yellow" ? "#fbc02d" : color === "blue" ? "#0288d1" : color === "pink" ? "#e91e63" : "#4caf50"
-                    }`,
+                    borderLeft: `5px solid ${color === "yellow" ? "#fbc02d" : color === "blue" ? "#0288d1" : color === "pink" ? "#e91e63" : "#4caf50"
+                      }`,
                     transition: "background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease",
                   }}
                 />

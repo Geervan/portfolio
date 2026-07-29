@@ -1233,8 +1233,8 @@ body.guestbook-page .container {
   .hero-polaroid-wrapper {
     /* top: -40px; */
     /* left: 40px; */
-    top:-40px;
-    left:10px;
+    top: -40px;
+    left: 10px;
     margin: 0;
   }
 }

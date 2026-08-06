@@ -45,7 +45,6 @@ export default function Gallery() {
                     <div className="tape" style={{ left: '40%', top: '-10px', transform: 'rotate(10deg)' }}></div>
                     <img src="/boat.jpeg" alt="Coding" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>A peaceful Boat ride in Udaipur</p>
-                    <div className="ink-splatter" style={{ bottom: '-10px', right: '-10px', opacity: 0.5 }}></div>
                 </div>
 
                 {/* Photo 3 */}

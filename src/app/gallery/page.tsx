@@ -61,31 +61,33 @@ export default function Gallery() {
                 {/* Photo 4 */}
                 <div
                     className="polaroid"
-                    style={{ transform: 'rotate(3deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/plen.jpeg", alt: "Team Lunch" })}
+                    style={{ transform: 'rotate(-2deg)', cursor: 'pointer' }}
+                    onClick={() => setSelectedImg({ src: "/plen.jpeg", alt: "Saw this beauty of an IL-76 while returning to college from vacay" })}
                 >
-                    <div className="tape" style={{ left: '50%', top: '-15px' }}></div>
-                    <img src="/plen.jpeg" alt="Team" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <div className="tape" style={{ left: '35%', top: '-15px', transform: 'rotate(-4deg)' }}></div>
+                    <img src="/plen.jpeg" alt="Saw this beauty of an IL-76 while returning to college from vacay" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>Saw this beauty of an IL-76 while returning to college from vacay</p>
                 </div>
 
+                {/* Photo 5 */}
                 <div
                     className="polaroid"
-                    style={{ transform: 'rotate(3deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/assam.jpeg", alt: "Assam" })}
+                    style={{ transform: 'rotate(2deg)', cursor: 'pointer' }}
+                    onClick={() => setSelectedImg({ src: "/assam.jpeg", alt: "Hard to believe that this is in India, Assam btw ✌️" })}
                 >
-                    <div className="tape" style={{ left: '50%', top: '-15px' }}></div>
-                    <img src="/assam.jpeg" alt="Team" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <div className="tape" style={{ left: '45%', top: '-10px', transform: 'rotate(8deg)' }}></div>
+                    <img src="/assam.jpeg" alt="Hard to believe that this is in India, Assam btw ✌️" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>Hard to believe that this is in India, Assam btw ✌️</p>
                 </div>
 
+                {/* Photo 6 */}
                 <div
                     className="polaroid"
-                    style={{ transform: 'rotate(3deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/jaipur.jpeg ", alt: "Team Lunch" })}
+                    style={{ transform: 'rotate(-1deg)', cursor: 'pointer' }}
+                    onClick={() => setSelectedImg({ src: "/jaipur.jpeg", alt: "Jaipur at night ❤️" })}
                 >
-                    <div className="tape" style={{ left: '50%', top: '-15px' }}></div>
-                    <img src="/jaipur.jpeg" alt="Team" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <div className="tape" style={{ left: '25%', top: '-12px', transform: 'rotate(-6deg)' }}></div>
+                    <img src="/jaipur.jpeg" alt="Jaipur at night ❤️" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>Jaipur at night ❤️</p>
                 </div>
 

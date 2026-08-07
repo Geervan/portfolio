@@ -29,10 +29,10 @@ export default function Gallery() {
                 <div
                     className="polaroid"
                     style={{ transform: 'rotate(-2deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/food.jpeg", alt: "Food" })}
+                    onClick={() => setSelectedImg({ src: "/food.jpeg", alt: "A Yum Yum Treat" })}
                 >
                     <div className="tape" style={{ left: '30%', top: '-15px' }}></div>
-                    <img src="/food.jpeg" alt="Hackathon" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <img src="/food.jpeg" alt="A Yum Yum Treat" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>A Yum Yum Treat</p>
                 </div>
 
@@ -40,21 +40,21 @@ export default function Gallery() {
                 <div
                     className="polaroid"
                     style={{ transform: 'rotate(2deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/boat.jpeg", alt: "Boating" })}
+                    onClick={() => setSelectedImg({ src: "/udaipur.jpg", alt: "Peace at Fateh Sagar, Udaipur " })}
                 >
                     <div className="tape" style={{ left: '40%', top: '-10px', transform: 'rotate(10deg)' }}></div>
-                    <img src="/boat.jpeg" alt="Coding" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
-                    <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>A peaceful Boat ride in Udaipur</p>
+                    <img src="/udaipur.jpg" alt="At Fateh Sagar, Udaipur" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>Peace at Fateh Sagar, Udaipur</p>
                 </div>
 
                 {/* Photo 3 */}
                 <div
                     className="polaroid"
                     style={{ transform: 'rotate(-1deg)', cursor: 'pointer' }}
-                    onClick={() => setSelectedImg({ src: "/messy.jpeg", alt: "Hardware" })}
+                    onClick={() => setSelectedImg({ src: "/messy.jpeg", alt: "The Raquet itself wasnt working so Harvested the Led lmaoooo" })}
                 >
                     <div className="tape" style={{ left: '20%', top: '-12px', transform: 'rotate(-5deg)' }}></div>
-                    <img src="/messy.jpeg" alt="Setup" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
+                    <img src="/messy.jpeg" alt="The Raquet itself wasnt working so Harvested the Led lmaoooo" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: '2px', filter: 'grayscale(20%)' }} />
                     <p style={{ textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-heading)' }}>The Raquet itself wasnt working so Harvested the Led lmaoooo</p>
                 </div>
 

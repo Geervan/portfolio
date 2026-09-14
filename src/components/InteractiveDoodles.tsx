@@ -25,6 +25,28 @@ export default function InteractiveDoodles() {
     const hoveredNavRef = useRef<string | null>(null);
     const isSurprisedRef = useRef(false);
     const showWelcomeRef = useRef(true);
+    const spotifyDataRef = useRef<{ title: string; artist: string; isPlaying: boolean } | null>(null);
+    const idleActivityRef = useRef<"music" | "coffee">("music");
+    const wasIdleRef = useRef(false);
+
+    // Fetch Spotify Status periodically
+    useEffect(() => {
+        const fetchSpotify = async () => {
+            try {
+                const res = await fetch("/api/spotify");
+                if (res.ok) {
+                    const data = await res.json();
+                    spotifyDataRef.current = data;
+                }
+            } catch {
+                // Keep default fallback
+            }
+        };
+
+        fetchSpotify();
+        const interval = setInterval(fetchSpotify, 15000);
+        return () => clearInterval(interval);
+    }, []);
 
     // Fade out welcome bubble after 6 seconds
     useEffect(() => {
@@ -71,8 +93,8 @@ export default function InteractiveDoodles() {
         // The Stickman Hero
         initialDoodles.push({
             id: 999,
-            x: window.innerWidth - 120,
-            y: window.innerHeight - 100,
+            x: window.innerWidth - 145,
+            y: window.innerHeight - 95,
             type: 'stickman',
             rotation: 0,
             scale: 1.3,
@@ -102,8 +124,8 @@ export default function InteractiveDoodles() {
             // Recalculate positions based on viewport dimensions
             doodleRef.current.forEach((d) => {
                 if (d.id === 999) {
-                    d.x = window.innerWidth - 120;
-                    d.y = window.innerHeight - 100;
+                    d.x = window.innerWidth - 145;
+                    d.y = window.innerHeight - 95;
                 } else if (d.xPercent !== undefined && d.yPercent !== undefined) {
                     d.x = window.innerWidth * d.xPercent;
                     d.y = window.innerHeight * d.yPercent;
@@ -111,6 +133,7 @@ export default function InteractiveDoodles() {
             });
         };
         window.addEventListener("resize", resize);
+
         resize();
 
         const drawShape = (ctx: CanvasRenderingContext2D, type: Doodle["type"]) => {
@@ -384,7 +407,121 @@ export default function InteractiveDoodles() {
                     ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
                     ctx.fillText("Welcome to Geervan's portfolio", -107, -40);
 
+                } else if (isIdle && idleActivityRef.current === 'music') {
+                    // 🎧 Spotify Music Jamming with Headphones
+                    const bpm = time * 0.12;
+                    const armGroove = Math.sin(bpm) * 4;
+
+                    // Draw Over-Ear Headphones
+                    ctx.save();
+                    ctx.strokeStyle = '#1db954'; // Spotify vibrant green
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+                    ctx.arc(0, -20, 12.5, Math.PI * 0.95, Math.PI * 2.05);
+                    ctx.stroke();
+
+                    // Headphone Earcups
+                    ctx.fillStyle = '#1db954';
+                    ctx.beginPath();
+                    ctx.roundRect(-13.5, -24, 4, 8, 2);
+                    ctx.roundRect(9.5, -24, 4, 8, 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Grooving Arms
+                    ctx.moveTo(0, -5); ctx.lineTo(-14, 5 + armGroove);
+                    ctx.moveTo(0, -5); ctx.lineTo(14, 5 - armGroove);
+                    ctx.stroke();
+
+                    // Compact Spotify Mini-Player Bubble
+                    const song = spotifyDataRef.current;
+                    const songTitle = song?.title || "Starboy";
+                    const songArtist = song?.artist || "The Weeknd";
+                    const isPlaying = song?.isPlaying;
+                    const statusLabel = isPlaying ? "Listening to:" : "Last Played:";
+
+
+                    // Measure exact text width to fit full title without overflow
+                    ctx.font = 'bold 12px "Patrick Hand", sans-serif';
+                    const titleWidth = ctx.measureText(songTitle).width;
+                    ctx.font = '10.5px "Patrick Hand", sans-serif';
+                    const artistWidth = ctx.measureText(songArtist).width;
+                    const bubbleWidth = Math.max(150, Math.max(titleWidth, artistWidth) + 24);
+                    
+                    // Account for d.scale (1.3) so the right edge is strictly >= 30px inside the window
+                    const scale = d.scale || 1.3;
+                    const maxRightScaled = ((window.innerWidth - 30) - d.x) / scale;
+                    const bubbleX = Math.min(-bubbleWidth / 2, maxRightScaled - bubbleWidth);
+                    const bubbleY = -92;
+                    const bubbleHeight = 48;
+
+                    // Pointer position along the bottom of the bubble
+                    const pointerX = Math.max(bubbleX + 14, Math.min(bubbleX + bubbleWidth - 14, 0));
+
+
+                    // Solid background fill so background content/photos never clash
+                    ctx.save();
+                    ctx.fillStyle = theme === 'dark' ? '#252528' : '#ffffff';
+                    ctx.fillRect(bubbleX, bubbleY, bubbleWidth, bubbleHeight);
+                    ctx.beginPath();
+                    ctx.moveTo(pointerX - 5, bubbleY + bubbleHeight);
+                    ctx.lineTo(0, -35);
+                    ctx.lineTo(pointerX + 5, bubbleY + bubbleHeight);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Sketchy outline & pointer
+                    ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.85)';
+                    ctx.lineWidth = 1.3;
+                    ctx.strokeRect(bubbleX, bubbleY, bubbleWidth, bubbleHeight);
+                    ctx.beginPath();
+                    ctx.moveTo(pointerX - 5, bubbleY + bubbleHeight);
+                    ctx.lineTo(0, -35);
+                    ctx.lineTo(pointerX + 5, bubbleY + bubbleHeight);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Line 1: Header (🎧 Listening to / Last Played)
+                    ctx.font = '10.5px "Patrick Hand", sans-serif';
+                    ctx.fillStyle = '#1db954';
+                    ctx.fillText(`🎧 ${statusLabel}`, bubbleX + 10, bubbleY + 14);
+
+                    // Line 2: Song Title (Bold)
+                    ctx.font = 'bold 12px "Patrick Hand", sans-serif';
+                    ctx.fillStyle = theme === 'dark' ? '#fff' : '#000';
+                    ctx.fillText(songTitle, bubbleX + 10, bubbleY + 29);
+
+                    // Line 3: Artist Name (Subtle)
+                    ctx.font = '10.5px "Patrick Hand", sans-serif';
+                    ctx.fillStyle = theme === 'dark' ? '#aaa' : '#666';
+                    ctx.fillText(songArtist, bubbleX + 10, bubbleY + 42);
+
+                    // Floating Animated Blue Music Notes (♪ ♫) placed prominently on sides
+                    const note1Y = -12 - ((time * 0.6) % 24);
+                    const note1X = 22 + Math.sin(time * 0.08) * 3;
+                    const note1Alpha = Math.max(0.15, 1 - ((-12 - note1Y) / 24));
+
+                    ctx.save();
+                    ctx.fillStyle = `rgba(0, 163, 255, ${note1Alpha})`;
+                    ctx.font = 'bold 16px sans-serif';
+                    ctx.fillText('♪', note1X, note1Y);
+
+                    const note2Y = -8 - (((time + 12) * 0.6) % 24);
+                    const note2X = -28 + Math.cos(time * 0.08) * 3;
+                    const note2Alpha = Math.max(0.15, 1 - ((-8 - note2Y) / 24));
+                    ctx.fillStyle = `rgba(0, 163, 255, ${note2Alpha})`;
+                    ctx.fillText('♫', note2X, note2Y);
+                    ctx.restore();
+
+
+
+
+
+
+
                 } else if (isIdle) {
+                    // ☕ Coffee Sip (Preserved in code)
                     ctx.moveTo(0, -5); ctx.lineTo(-10, 5);
                     ctx.moveTo(0, -5); ctx.lineTo(12, -10);
                     ctx.stroke();
@@ -417,6 +554,13 @@ export default function InteractiveDoodles() {
             const now = Date.now();
             const timeSinceMove = now - lastMoveRef.current;
             const isIdle = timeSinceMove > 4000;
+
+            // Always display music on idle
+            if (isIdle) {
+                idleActivityRef.current = "music";
+            }
+            wasIdleRef.current = isIdle;
+
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const mx = mouseRef.current.x;

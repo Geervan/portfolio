@@ -25,7 +25,7 @@ export default function Projects() {
             description: "A client-side cryptographic simulation using a chaotic 3D Rubik's Cube as a dynamic key. Features custom deterministic state evolution (CFB) and real-time P2P messaging via WebRTC.",
             tags: ["Three.js", "PeerJS", "Vite", "Vanilla JS"],
             githubLink: "https://github.com/Geervan/Cube-Cryptography-Sim", // Assumed based on context
-            link: "https://geervan-cube-cryptography.vercel.app/", // Placeholder
+            link: "https://cube-cryptography.vercel.app/", // Placeholder
             image: "/projects/cube_crypto.png"
         },
         {
